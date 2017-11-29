@@ -1,0 +1,249 @@
+body {
+  margin: 0;
+  padding: 0;}
+#background {
+position: fixed;
+width: 100%;
+height: 100ch;
+top: 0;
+z-index: -1;
+filter: contrast(1.3) grayscale(0.2);
+background: url('../assets/marvel-background.jpg');
+background-repeat: no-repeat;
+background-size: 200ch 100%;
+}
+.container__loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin-top: 25%;
+}
+.loader {
+  border: 6px solid #00013f;
+  border-top: 6px solid rgb(184, 0, 0);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  order: 1; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+h1 {
+  margin: 0px;
+  background-color: #730000;
+  border: 1px solid black;
+  text-align: center;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: Black;
+  font-size: 5rem;
+  text-shadow: 0px 0px 15px #ffffff;
+  width: 100%; }
+
+h3 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: #191919;
+  text-shadow: 2px 2px 20px #d2d0d0;
+  font-size: 2rem;
+  width: max-content;
+  order: 1;
+  margin-left: 5px;}
+.search__container{
+  margin: auto;
+}
+  .search {
+    background: transparent;
+    padding-left: 0.5em;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    height: 30px;
+    width: 0.1em;
+    height: 0.1em;
+    display: none;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: rgb(207, 0, 0);
+    font-size: 1.5rem;
+    transition: 0.2s;
+    text-shadow: 0 0 0 transparent; 
+  }
+  .search:focus {
+    outline: none;
+    height: auto;
+    border: 2px solid red;
+    box-shadow: 0 0 10px #F40000;
+    width: 10em;
+    border-radius: 5%;
+  }
+.collection {
+  order: 3;
+  text-align: center;
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: space-around;
+  align-self: center; }
+  .collection .hero {
+    position: relative;
+    margin: 20px 20px 50px 50px;
+    width: 350px;
+    height: 350px;
+    text-align: center;
+    display: inherit;
+    justify-content: center;
+    align-self: end;
+    order: 1; }
+    .collection .hero__front {
+      overflow: hidden;
+      background-color: black;
+      margin-bottom: 20px; }
+    .collection .hero__back {
+      margin: auto;
+      text-shadow: 2px 2px 2px black;
+      background-color: #a00000;
+      -webkit-transform: rotateY(-180deg);
+      transform: rotateY(-180deg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid black; }
+    .collection .hero__front, .collection .hero__back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-transition: -webkit-transform 0.3s;
+      transition: transform 0.5s; }
+    .collection .hero__name {
+      margin-top: 350px;
+      text-align: center;
+      width: auto;
+      position: relative;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 2rem;
+      color: #191919;
+      text-shadow: 2px 2px 20px #d2d0d0;
+      cursor: pointer; }
+    .collection .hero__description {
+      color: white;
+      border-radius: 50%;
+      padding: 0 10px;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      color: white;
+      font-size: 1rem;
+      text-shadow: 0 0 10px black;
+      font-family: Courier New, Courier, monospace;
+      font-weight: 900; }
+    .collection .hero_image_frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid rgba(0, 3, 35);
+      box-shadow: inset 0px 0px 120px 34px rgba(0, 3, 35, 1);
+      border-radius: 50%; }
+    .collection .hero__image {
+      margin: 0 auto;
+      height: 100%;
+      width: auto; }
+
+.hero.hero__hover:hover .hero__front {
+  -webkit-transform: rotateY(-180deg);
+  transform: rotateY(-180deg); }
+
+.hero.hero__hover:hover .hero__back {
+  -webkit-transform: rotateY(0deg);
+  transform: rotateY(0deg); }
+
+.header{
+  position: fixed;
+  width: 100%;
+  z-index: 1;}
+  .tabs{
+    margin: 0;
+    padding: 0 1em 0.5em 0;
+    height: 1.5em;
+    list-style: none;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-flow: row wrap;
+    font-size: 2em;
+    transition: 0.2s;
+    background-color: #a90000e8;
+    background: linear-gradient(to bottom, 
+    rgb(121, 23, 23) 0%, 
+    rgb(158, 29, 29) 70%, 
+    rgba(167, 31, 31, 0.80) 76%, 
+    rgba(184, 35, 35, 0.65) 82%, 
+    rgba(187, 35, 35, 0.5) 88%, 
+    rgba(190, 37, 37, 0.30) 94%, 
+    rgba(192, 102, 102, 0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( 
+      startColorstr='#1e5799', 
+      endColorstr='#007db9e8', 
+      GradientType=0);
+  }
+  .tab{
+    transition: 0.3s;}
+    .tab:hover {
+      color: rgb(204, 0, 0);
+      text-shadow: 0px -2px 2px rgb(245, 198, 46);}
+  #glass {
+    width: 1em;
+    transition: 0.3s;}
+    #glass:hover {
+      filter: invert();}
+  .filter{
+    font-size: 0.5em;
+    transition: 0.2s;
+    cursor: pointer;}
+    .filter:hover{
+      color: rgb(77, 0, 0);}
+.comics {
+  top: 0.5em;}
+  .comic__img {
+    width: 14em;
+    height: 21.62em;}
+  .comic__name {
+    width: 14em;
+    color: #191919;
+    text-shadow: 2px 2px 20px #d2d0d0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1em;}
+.content__container{
+  /* display: grid;
+  grid-template-columns: 10%  80% 10%;
+  grid-template-rows: 40% 20% 40%; */
+  top: 25%;
+  position: absolute;
+  width: 100%;
+  height: 75vh;}
+  .home_message{
+    /* grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3; */
+    box-shadow: 0px 0px 21px 28px #4a000080;
+    background-color: #4a000080;
+    width: 100%;
+    margin-top: 25%;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 3em;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    opacity: 0.6;
+    color: #191919;
+    transition: 0.3s;
+    text-shadow: 2px 2px 20px #d2d0d0;}
+    .home_message:hover {
+      opacity: 0.8;}

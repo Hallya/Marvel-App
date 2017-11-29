@@ -1,0 +1,16 @@
+{    
+    "env": {
+        "test": {
+            "presets": [
+                "es2015",
+                "react",
+                "env"
+            ],
+            "plugins": [
+                "transform-es2015-modules-commonjs",
+                "dynamic-import-node",
+                "transform-object-rest-spread"
+            ]
+        }
+    }
+}
