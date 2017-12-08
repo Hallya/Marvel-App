@@ -1,0 +1,34 @@
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+h3 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: #191919;
+  text-shadow: 2px 2px 20px #d2d0d0;
+  font-size: 2rem;
+  width: max-content;
+  order: 1;
+  margin-left: 5px;
+}
+.container__loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin-top: 25%;
+}
+
+.loader {
+  border: 6px solid #00013f;
+  border-top: 6px solid rgb(184, 0, 0);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  order: 1;
+}

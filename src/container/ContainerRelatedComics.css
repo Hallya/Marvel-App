@@ -1,0 +1,6 @@
+.list_Comics{
+  list-style: none;
+  height: 95%;
+  overflow: scroll;
+  padding: 0;
+}

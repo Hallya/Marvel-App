@@ -1,0 +1,9 @@
+.filter {
+  font-size: 0.5em;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.filter:hover {
+  color: rgb(77, 0, 0);
+}

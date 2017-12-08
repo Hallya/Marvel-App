@@ -1,0 +1,31 @@
+@keyframes home_message {
+  0% {
+    opacity: .4
+  }
+  100% {
+    opacity: .9
+  }
+}
+
+.content__container {
+  top: 19%;
+  position: fixed;
+  width: 100%;
+  height: 80%;
+}
+
+.home_message {
+  box-shadow: 0px 0px 70px 70px #4a000080;
+  background-color: #4a000080;
+  width: 100%;
+  margin-top: 35vh;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 3em;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  animation: home_message 2s infinite both ease-in-out alternate;
+  color: #191919;
+  transition: 0.3s;
+  text-shadow: 2px 2px 20px #d2d0d0;
+}
+

@@ -1,0 +1,118 @@
+@keyframes home_message {
+  0% {
+    opacity: .4
+  }
+  100% {
+    opacity: .9
+  }
+}
+
+.profil {
+width: 40%;
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+  -ms-flex-order: 2;
+  order: 2;
+  background: #0c0031ad;
+  border-radius: 5%;}
+  .profil__tab{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 64% 36%;
+    grid-template-rows: auto;
+    grid-template-areas: "photo info" "textDisplayed textDisplayed";}
+    .profil_hero_img{
+      grid-area: photo;
+      text-align: center;
+      background: black;
+      position: relative;
+      border: 3px solid rgb(0, 0, 0);
+      border-radius: 5%;
+      margin: 4% 0 0 4%;
+      height: 37vh;
+      width: 24vw;
+      overflow: hidden;}
+      .profil__img{
+        height: 100%;
+        width: auto;}
+      .profil_img_frame{
+        box-shadow: inset 0px 0px 90px #440000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;}
+    .profil_hero_infos{
+      grid-area: info;
+      margin-left: 10%;
+      height: 40vh;
+      width: 85%;
+      display: grid;
+      grid-template-rows: 40% 30% 30%;}
+      .profil__name{
+        font-size: 2.2vw;
+        height: 100%;
+        color: #62f785;
+        text-shadow: 0 0 18px #4d94ff;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;}
+      .profil_select_info{
+        display: flex;
+        justify-content: left;
+        align-items: center;
+      }
+      .profil__description{
+        font-family: Impact,Haettenschweiler,'Arial Narrow Bold',sans-serif;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        cursor: pointer;
+        color: rgb(255, 217, 0);
+        text-shadow: 0 0 15px greenyellow;
+        height: min-content;}
+        .profil__description_radio{
+          margin-right: 5%;
+        }
+        .profil__comics {
+        font-family: Impact,Haettenschweiler,'Arial Narrow Bold',sans-serif;
+        grid-row-start: 3;
+        grid-row-end: 4;
+        cursor: pointer;
+        height: min-content;
+        color: rgb(255, 217, 0);
+        text-shadow: 0 0 15px greenyellow;}
+    .profil_hero_text{
+      grid-area: textDisplayed;
+      height: 30vh;
+      width: 40vw;}
+      .profil__text {
+        background: #000000ad;
+        border: 3px solid black;
+        border-radius: 5%;
+        text-align: justify;
+        padding: 2%;
+        width: 86%;
+        height: 88%;
+        margin: 0% 4%;
+        font-size: 1.3vw;
+        color: #01a901;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;}
+  .profil_message {
+  border-radius: 50%;
+  font-size: 3vw;
+  font-family: Impact,
+  Haettenschweiler,
+  'Arial Narrow Bold',
+  sans-serif;
+  -webkit-animation: home_message 2s infinite both ease-in-out alternate;
+  animation: home_message 2s infinite both ease-in-out alternate;
+  color: #ffe630;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  text-shadow: 0px 0px 20px #ff0000;}

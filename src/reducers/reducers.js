@@ -57,7 +57,7 @@ function posts(state = initialState, action) {
 
 function actualPage(state = {
   id: null,
-  data: {},
+  data: [],
   receivedAt: null,
   isFocused: false
 }, action) {
@@ -74,7 +74,8 @@ function actualPage(state = {
     case act.REQUEST_POSTS:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        category: action.category
       };
     case act.RECEIVE_POSTS:
       return {
@@ -99,15 +100,72 @@ function actualPage(state = {
   }
 }
 
-function visibilityFilter(state = act.VisibilityFilters.SHOW_ALL, action) {
-  console.log(action);
+function actualProfil(state = {
+  id: null,
+  data: null,
+  infosDisplayed: null,
+  relatedData: {
+    isFetching: false,
+    actualRelatedData: null,
+    previousRelatedData: []
+  }
+}, action) {
+
+  switch (action.type) {
+    case act.SET_PROFIL:
+      return {
+        ...state,
+        id: action.id,
+        data: action.data
+      }
+    case act.SET_INFO:
+      return {
+        ...state,
+        infosDisplayed: action.value
+      }
+    case act.REQUEST_RELATED_DATA:
+      return {
+        ...state,
+        relatedData: {
+          ...state.relatedData,
+          isFetching: true,
+        }
+      }
+    case act.SET_RELATED_COMICS:
+      return {
+        ...state,
+        relatedData: {
+          isFetching: false,
+          actualRelatedData: action.data,
+          previousRelatedData: [
+            ...state.relatedData.previousRelatedData,
+            {
+              id: action.id,
+              data: action.data
+            }
+          ]
+        }
+      }
+    default:
+      return state;
+  }
+}
+
+function visibilityFilter(state = {
+  images: false,
+  description: false
+}, action) {
   switch (action.filter) { 
-    case act.VisibilityFilters.SHOW_ALL:
-      return act.VisibilityFilters.SHOW_ALL
-    case act.VisibilityFilters.SHOW_DESCRIPTION:
-      return act.VisibilityFilters.SHOW_DESCRIPTION  
+    case act.VisibilityFilters.SHOW_DESCRIPTION:  
+      return {
+        ...state,
+        description: !state.description
+      }
     case act.VisibilityFilters.SHOW_IMAGES:
-      return act.VisibilityFilters.SHOW_IMAGES 
+      return {
+        ...state,
+        images: !state.images
+      } 
     default:
       return state;
   }
@@ -115,6 +173,7 @@ function visibilityFilter(state = act.VisibilityFilters.SHOW_ALL, action) {
 
 const rootReducer = combineReducers({
   actualPage,
+  actualProfil,
   posts,
   visibilityFilter
 });

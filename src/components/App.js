@@ -1,13 +1,18 @@
 import React from 'react';
-import Header from '../presentational/Header';
+import Header from '../container/Header';
 import HomeContainer from '../container/ContainerHome';
-import style from '../css/styles.css';
+import './App.css';
 
-const App = () => (
+const App = ({ setFilter, filter }) => {
+  return(
   <div>
-    <Header />  
-    <HomeContainer />
-  </div>
-);
+    <div>
+      <Header />  
+      <HomeContainer />
+    </div>
+      <div id='background'></div>
+  </div>  
+  )
+};
 
 export default App;

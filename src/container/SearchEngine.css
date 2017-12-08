@@ -1,0 +1,36 @@
+.search__container {
+  margin: auto;
+}
+
+.search {
+  background: transparent;
+  padding-left: 0.5em;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  width: 0.1em;
+  height: 0.1em;
+  display: none;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgb(207, 0, 0);
+  font-size: 1.5rem;
+  transition: 0.2s;
+  text-shadow: 0 0 0 transparent;
+}
+
+.search:focus {
+  outline: none;
+  height: auto;
+  border: 2px solid red;
+  box-shadow: 0 0 10px #F40000;
+  width: 10em;
+  border-radius: 5%;
+}
+
+#glass {
+  width: 1em;
+  transition: 0.3s;
+}
+
+#glass:hover {
+  filter: invert();
+}

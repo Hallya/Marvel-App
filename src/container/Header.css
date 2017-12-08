@@ -1,0 +1,44 @@
+h1 {
+  margin: 0px;
+  background-color: #730000;
+  border: 1px solid black;
+  text-align: center;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: Black;
+  font-size: 5vw;
+  text-shadow: 0px 0px 15px #ffffff;
+  width: 100%;}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  z-index: 2;
+}
+
+.tabs {
+  margin: 0;
+  padding: 0 0em 0.5em 0;
+  height: 1.5em;
+  list-style: none;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-flow: row wrap;
+  font-size: 2.5vw;
+  transition: 0.2s;
+  background-color: #a90000e8;
+  background: linear-gradient(to bottom, rgb(121, 23, 23) 0%, rgb(158, 29, 29) 70%, rgba(167, 31, 31, 0.80) 76%, rgba(184, 35, 35, 0.65) 82%, rgba(187, 35, 35, 0.5) 88%, rgba(190, 37, 37, 0.30) 94%, rgba(192, 102, 102, 0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8', GradientType=0);
+}
+
+.tab {
+  transition: 0.2s;
+}
+
+.tab:hover {
+  color: rgb(204, 0, 0);
+  text-shadow: 0px -2px 2px rgb(245, 198, 46);
+}

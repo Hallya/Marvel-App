@@ -1,0 +1,115 @@
+@keyframes shadow_name {
+  0% {
+    opacity: .7
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+.collection {
+  order: 3;
+  text-align: center;
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: space-around;
+  align-self: center;
+
+}
+
+  .comic {
+    top: 0.5em;
+    position: relative;
+    margin: 20px 20px 50px 50px;
+    text-align: center;
+    display: inherit;
+    justify-content: center;
+    align-self: end;
+    order: 1;
+    width: 14em;
+    height: 21.62em;
+  }
+
+  .comic__img {
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+  }
+
+  .collection .comic__front {
+    overflow: hidden;
+    border: 2px solid rgb(255, 211, 90);
+    z-index: 1;
+    background-color: black;
+    margin-bottom: 20px;
+    transform: rotateY(0deg);
+  }
+
+  .collection .comic__back {
+    margin: -2px 0 0px -2px;
+    z-index: 0;
+    overflow: scroll;
+    text-shadow: 2px 2px 2px black;
+    background-color: #a00000;
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+  }
+
+  .collection .comic__front,
+  .collection .comic__back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.5s;
+  }
+
+  .collection .comic__name {
+    width: 14em;
+    margin-top: 350px;
+    text-align: center;
+    color: #191919;
+    text-shadow: 2px 2px 20px #d2d0d0;
+    animation: shadow_name 2s infinite ease-in-out both alternate;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1em;
+  }
+
+  .collection .comic_image_frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0px 0px 20px 5px rgb(1, 4, 39);
+  }
+
+  .collection .comic__description {
+    color: rgb(255, 255, 255);
+    top: 0;
+    padding: 0 10px;
+    position: absolute;
+    font-size: 1rem;
+    text-shadow: 0 0 10px black;
+    font-family: Courier New, Courier, monospace;
+    font-weight: 900;
+  }
+
+  .comic.comic__hover:hover .comic__front {
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+  }
+
+  .comic.comic__hover:hover .comic__back {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
