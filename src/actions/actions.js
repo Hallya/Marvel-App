@@ -6,6 +6,7 @@ export const REQUEST_RELATED_DATA = 'REQUEST_RELATED_DATA';
 export const REQUEST_POSTS = 'REQUEST_POSTS';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const SET_RELATED_COMICS = 'SET_RELATED_COMICS';
+export const RESET_RELATED_COMICS = 'RESET_RELATED_COMICS';
 export const ERROR_POSTS = 'ERROR_POSTS';
 export const SET_INFO = 'SET_INFO';
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -21,7 +22,10 @@ export const VisibilityFilters = {
 
 export const getProfil = (id) => (dispatch, getState) => {
   const { actualPage } = getState(),
-    { data } = actualPage;
+        { actualProfil } = getState(),
+        { data } = actualPage,
+    lastId = actualProfil.id;
+  if (lastId === id) return;
   let found = data.find(item => item.id === Number(id))
   if (found) {
     console.log(`You have selected ${found.name}`)
@@ -40,6 +44,12 @@ export function leaveSearchbarFocus() {
   };
 }
 
+export function resetRelatedComics(data) {
+  return {
+    type: RESET_RELATED_COMICS,
+    data
+  }
+}
 
 export function setRelatedComics(id, data) {
   return {
@@ -48,7 +58,7 @@ export function setRelatedComics(id, data) {
     id
   }
 }
-export function setProfil(id, data) {
+export function setProfil (id, data){
   return {
     type: SET_PROFIL,
     id,
@@ -135,8 +145,9 @@ export const fetchRelatedComics = characterId => (dispatch, getState) => {
   found = help.checkForItems(previousRelatedData) ?
     help.checkItemsById(characterId, previousRelatedData) : null;
   
-  if (found)
-    return dispatch(setRelatedComics(characterId, found))
+  if (found) {
+    return dispatch(resetRelatedComics(found.data))
+  }
   dispatch(requestRelatedComics(characterId));
 
   return fetch(`https://gateway.marvel.com/v1/public/comics?characters=${characterId}&limit=100&offset=0&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`, {

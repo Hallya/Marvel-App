@@ -146,6 +146,15 @@ function actualProfil(state = {
           ]
         }
       }
+    case act.RESET_RELATED_COMICS:
+      return {
+        ...state,
+        relatedData: {
+          ...state.relatedData,
+          isFetching: false,
+          actualRelatedData: action.data,
+        }
+      }
     default:
       return state;
   }

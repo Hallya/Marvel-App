@@ -62,7 +62,6 @@ const mapDispatchToProps = dispatch => {
         dispatch(setInfo(e.target.value))
     },
     getRelatedComics: e => {
-      console.log(e.target.id);
       dispatch(fetchRelatedComics(e.target.id));
     }
   }

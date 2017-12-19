@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import './ContainerRelatedComics.css'
 
 const ContainerRelatedComics = ({comics}) => {
-  let relatedComics = comics.actualRelatedData;
-
+  let actualRelatedData = comics.actualRelatedData;
   return (
     <ul className="list_Comics" >
       {
-        relatedComics && !comics.isFetching ? relatedComics.map(comic => {
+        actualRelatedData.length > 0 && !comics.isFetching ? actualRelatedData.map(comic => {
           return <li key={comic.id}>{comic.title}</li>
         })
           :
-          relatedComics === [] && !comics.isFetching ?
+          actualRelatedData.length === 0 && !comics.isFetching ?
             "N/A"
             :
             "Loading comics..."  
