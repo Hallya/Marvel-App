@@ -23,7 +23,8 @@
       text-align: center;
       overflow: hidden;
       position: relative;
-      background: white;}
+    background: #1b2752c9;
+    }
       .hero__img {
         width: auto;
         height: 100%;}

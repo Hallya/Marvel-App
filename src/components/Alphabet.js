@@ -1,15 +1,17 @@
 import React from 'react';
 import './Alphabet.css';
+import Letters from '../presentational/Letters';
 
-class Alphabet extends React.Component {
-  constructor() {
-    super();
+class Alphabet extends React.Component{
+  constructor(props) {
+    super(props);
     this.state = {
       offset: 0,
       expanded: false
     }
   }  
-  changeLetters = () => {
+
+  changeLetters = e => {
     const tick = () =>
       setTimeout(() => {
         this.setState({
@@ -22,7 +24,7 @@ class Alphabet extends React.Component {
           tick();
         }
         else this.setState({ expanded: !this.state.expanded });
-      }, 10);
+      }, 5);
     tick();
   };
 
@@ -34,52 +36,23 @@ class Alphabet extends React.Component {
       lettersLeft.push(String.fromCharCode(65 + i) + ' ');
       if (offset === 0) lettersLeft.push('-');
     }
-    lettersRight.push(' ' + String.fromCharCode(90));
+    lettersRight.push(` ${String.fromCharCode(90)}`);
     return lettersLeft.concat(lettersRight);
   };
 
-  // showAlphabet = () => {
-
-  //   if (this.state.letters.includes('-')) this.setState({ letters: '# A Z' });
-  //   if (this.state.letters.length < 52){
-  //     return setTimeout(() => {
-  //       this.setState({
-  //         letters: [
-  //           this.state.letters.slice(0, 3),
-  //           String.fromCharCode(this.state.i),
-  //           this.state.letters.slice(this.state.position)
-  //         ].join(' '),
-  //         i: this.state.i - 1,
-  //         position: this.state.position - 2
-  //       });
-  //       if (this.state.i > 65) requestAnimationFrame(this.showAlphabet);
-  //       }, 1000 / this.state.fps);
-  //   }
-  //   else if (this.state.letters.length > 5) {
-  //     return setTimeout(() => {
-  //       this.setState({
-  //         letters: [
-  //           this.state.letters.slice(0, this.state.position),
-  //           this.state.letters.slice(this.state.position+1)
-  //         ].join(' '),
-  //         position: this.state.position + 2
-  //       });
-
-  //       if (this.state.position < -1) requestAnimationFrame(this.showAlphabet);
-  //       else {
-  //         console.log('Coucou');
-  //         this.setState({
-  //           letters: '#A-Z',
-  //           i: 89
-  //         });
-  //       }
-  //     }, 1000 / this.state.fps); 
-  //   }
-  // }
-
-
-  render(){
-    return <li className="pagination" onClick={this.changeLetters}>#{this.renderLetters()}</li>;
+  getHerosStartingWith = (e) => {
+    if (this.state.expanded) {
+      return this.props.fetchByLetter(e);
+    }
+  }
+  render() {
+    return (
+      <Letters
+        changeLetters={this.changeLetters}
+        renderLetters={this.renderLetters()}
+        fetchByLetter={this.getHerosStartingWith}
+      />
+    )
   }
 }
 

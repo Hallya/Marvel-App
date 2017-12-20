@@ -132,18 +132,19 @@ export const fetchCategory = (category, requestId) => (dispatch, getState) => {
 };
 
 
+
 export const fetchRelatedComics = characterId => (dispatch, getState) => {
   
   const
-    { actualProfil } = getState(),
-    { relatedData } = actualProfil,
-    { id } = actualProfil,
-    { previousRelatedData } = relatedData;
-    let found;
+  { actualProfil } = getState(),
+  { relatedData } = actualProfil,
+  { id } = actualProfil,
+  { previousRelatedData } = relatedData;
+  let found;
 
   if (id && id === characterId) return;
   found = help.checkForItems(previousRelatedData) ?
-    help.checkItemsById(characterId, previousRelatedData) : null;
+  help.checkItemsById(characterId, previousRelatedData) : null;
   
   if (found) {
     return dispatch(resetRelatedComics(found.data))
@@ -155,5 +156,29 @@ export const fetchRelatedComics = characterId => (dispatch, getState) => {
   }).then(data => data.json(),
     error => console.log(error))
     .then(
-    json => dispatch(setRelatedComics(characterId, json)))
+      json => dispatch(setRelatedComics(characterId, json)))
+};
+
+export const fetchByLetter = (requestId) => (dispatch, getState) => { 
+
+const
+{ posts, actualPage } = getState(),
+cat = posts['characters'],
+{ lastFetchId } = cat,
+{ id } = actualPage;
+
+let found;
+
+if (lastFetchId && id === requestId) return;
+
+found = help.checkForItems(cat.items) ?
+help.checkItemsById(requestId, cat.items) : null;
+if (found) return dispatch(setCurrentPage(requestId, 'characters', found));
+
+dispatch(requestFetch('characters', requestId));
+  return fetch(`https://gateway.marvel.com/v1/public/characters?nameStartsWith=${requestId}&limit=100&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`).then(data => data.json())
+  .then(
+  json => dispatch(receiveFetch('characters', json, requestId)),
+  error => console.log(error)
+  );
 };

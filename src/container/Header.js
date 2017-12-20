@@ -3,7 +3,7 @@ import SearchEngine from './SearchEngine';
 import Filters from './ContainerFilters';
 import { fetchCategory } from '../actions/actions';
 import { connect } from 'react-redux';
-import Alphabet from '../components/Alphabet';
+import Alphabet from '../container/ContainerAlphabet';
 import './Header.css';
 
 const selectedCat = {

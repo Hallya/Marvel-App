@@ -1,7 +1,7 @@
 {
     "workbench.statusBar.visible": true,
     "workbench.activityBar.visible": true,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": -1,
     "auto-close-tag.activationOnLanguage": [
         "xml",
         "php",
@@ -32,7 +32,7 @@
     "editor.autoIndent": true,
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.cursorBlinking": "expand",
-    "editor.mouseWheelZoom": true,
+    "editor.mouseWheelZoom": false,
     "editor.renderLineHighlight": "gutter",
     "editor.formatOnSave": false,
     "window.restoreWindows": "folders",

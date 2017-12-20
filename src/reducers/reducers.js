@@ -106,7 +106,7 @@ function actualProfil(state = {
   infosDisplayed: null,
   relatedData: {
     isFetching: false,
-    actualRelatedData: null,
+    actualRelatedData: [],
     previousRelatedData: []
   }
 }, action) {

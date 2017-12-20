@@ -7,14 +7,14 @@ const ContainerRelatedComics = ({comics}) => {
   return (
     <ul className="list_Comics" >
       {
-        actualRelatedData.length > 0 && !comics.isFetching ? actualRelatedData.map(comic => {
+        (actualRelatedData && actualRelatedData.length > 0 && !comics.isFetching) ? actualRelatedData.map(comic => {
           return <li key={comic.id}>{comic.title}</li>
         })
+        :
+          (actualRelatedData.length === 0 || !actualRelatedData) && !comics.isFetching ?
+          "N/A"
           :
-          actualRelatedData.length === 0 && !comics.isFetching ?
-            "N/A"
-            :
-            "Loading comics..."  
+          "Loading comics..."  
       }
     </ul>
   )

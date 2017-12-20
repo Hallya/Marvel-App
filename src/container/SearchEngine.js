@@ -1,7 +1,7 @@
 import React from 'react';
 import './SearchEngine.css';
 import img from '../assets/search.svg';
-import { getSearchbarFocus, leaveSearchbarFocus } from '../actions/actions';
+import { getSearchbarFocus, leaveSearchbarFocus, fetchByLetter } from '../actions/actions';
 import { connect } from 'react-redux';
 
 const displayOn = {
@@ -11,10 +11,10 @@ const displayOff = {
   display: 'none'
 }
 
-const SearchEngine = ({ showSearchBar, hideSearchBar, focus }) =>  (
+const SearchEngine = ({ showSearchBar, hideSearchBar, focus, searchNamesStartingBy }) =>  (
   <div className="search__container">
     <div>
-      <form>
+      <form onSubmit={searchNamesStartingBy}>
         <input
           id="search"  
           className="search"
@@ -54,6 +54,11 @@ const mapDispatchToProps = dispatch => {
       setTimeout(() => {
         dispatch(leaveSearchbarFocus());
       }, 200);
+    },
+    searchNamesStartingBy: (e) => {
+      e.preventDefault();
+      console.log(e.target.textContent)
+      // dispatch(fetchByLetter(id));
     }
   }
 }
