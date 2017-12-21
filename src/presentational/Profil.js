@@ -47,6 +47,10 @@ const Profil = ({
                 />
                 <p className="profil__comics">Comics</p>
               </div>
+              <hr/>
+              <div>
+                <p className="profil_comics_found">{profil.data.comics.available} Comics found</p>
+              </div>
             </form>  
           </div>
           <div className="profil_hero_text">

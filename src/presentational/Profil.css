@@ -80,12 +80,19 @@ width: 40%;
         }
         .profil__comics {
         font-family: Impact,Haettenschweiler,'Arial Narrow Bold',sans-serif;
-        grid-row-start: 3;
-        grid-row-end: 4;
+        grid-row-start: 2;
+        grid-row-end: 3;
         cursor: pointer;
         height: min-content;
         color: rgb(255, 217, 0);
         text-shadow: 0 0 15px greenyellow;}
+        .profil_comics_found{
+          font-family: Impact,Haettenschweiler,'Arial Narrow Bold',sans-serif;
+          grid-row-start: 3;
+          grid-row-end: 4;
+          color: #61f784;
+          text-align: left;
+        }
     .profil_hero_text{
       grid-area: textDisplayed;
       height: 30vh;

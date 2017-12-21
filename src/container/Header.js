@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchEngine from './SearchEngine';
+import ContainerSearch from '../container/ContainerSearch';
 import Filters from './ContainerFilters';
 import { fetchCategory } from '../actions/actions';
 import { connect } from 'react-redux';
@@ -31,7 +31,7 @@ const Header = ({
           style={selectedCategory.category === "characters" ? selectedCat : null}> Characters
         </li>
         <li>
-          <SearchEngine
+          <ContainerSearch
             focus={searchbarFocus}
             displaySearchBar={onSearchIconClick}
             hideSearchBar={onLeaveInput}
