@@ -56,10 +56,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(getProfil(e.target.id));
     },
     showDescription: e => {
-        dispatch(setInfo(e.target.value))
+      dispatch(setInfo('description'))
     },
     showComics: e => {
-        dispatch(setInfo(e.target.value))
+        dispatch(setInfo('comics'))
     },
     getRelatedComics: e => {
       dispatch(fetchRelatedComics(e.target.id));

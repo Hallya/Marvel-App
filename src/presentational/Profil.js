@@ -25,28 +25,34 @@ const Profil = ({
             <p className="profil__name"
               onChange={refreshComics}>{profil.data.name}</p>
             <form >
-              <div className="profil_select_info" >
-                <input
-                  type="radio"
-                  name="info"
-                  value="description"
-                  className="profil__description_radio"
-                  onChange={showDescription}
-                  checked={info.infosDisplayed === "description" ? true : false}
-                />  
-                <p className="profil__description">description</p>
-              </div>
-              <div className="profil_select_info">
-                <input
-                  type="radio"
-                  name="info"
-                  value="comics"
-                  className="profil__description_radio"
-                  onChange={showComics}
-                  checked={info.infosDisplayed === "comics" ? true : false}
-                />
-                <p className="profil__comics">Comics</p>
-              </div>
+              <ul>
+                <li className="profil_select_info"
+                  onClick={showDescription}
+                  value="description">
+                  <input
+                    type="radio"
+                    name="info"
+                    
+                    className="profil__description_radio"
+                    checked={info.infosDisplayed === "description" ? true : false}
+                  />  
+                  <div className='check'></div>
+                  <label className="profil__description">description</label>
+                </li>
+                <li
+                  className="profil_select_info"
+                  onClick={showComics}
+                  value="comics">
+                  <input
+                    type="radio"
+                    name="info"
+                    className="profil__description_radio"
+                    checked={info.infosDisplayed === "comics" ? true : false}
+                  />
+                  <div className='check'></div>
+                  <label className="profil__comics">Comics</label>
+                </li>
+              </ul>
               <hr/>
               <div>
                 <p className="profil_comics_found">{profil.data.comics.available} Comics found</p>
