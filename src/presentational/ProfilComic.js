@@ -1,6 +1,6 @@
 import React from 'react';
-import './Profil.css';
-import ContainerRelatedComics from '../container/ContainerRelatedComics';
+import './ProfilComic.css';
+import ContainerRelatedCharacters from '../container/ContainerRelatedCharacters';
 
 const Profil = ({
   profil,
@@ -50,13 +50,19 @@ const Profil = ({
                     checked={info.infosDisplayed === "comics" ? true : false}
                   />
                   <div className='check'></div>
-                  <label className="profil__comics">Comics</label>
+                  <label className="profil__comics">Characters</label>
                 </li>
               </ul>
               <hr/>
               <div>
                 <p className="profil_comics_found">
-                  {profil.data.comics.available ? profil.data.comics.available : 0} Comics found
+                  {
+                    profil.data.characters.available ?
+                      profil.data.characters.available
+                      : 0
+                  } Character{
+                    profil.data.characters.available <= 1 ? "" : "s"
+                  } found
                 </p>
               </div>
             </form>  
@@ -70,7 +76,7 @@ const Profil = ({
                     :
                     "N/A"
                   :
-                  <ContainerRelatedComics info={info}/>
+                  <ContainerRelatedCharacters info={info}/>
                 :
                 ""
               }
@@ -78,7 +84,7 @@ const Profil = ({
           </div>
       </div>
         :
-        <p className='profil_message'>SELECT<br/>CHARACTER</p>  
+        <p className='profil_message'>SELECT<br/>COMIC</p>  
     }
     </div >
   )

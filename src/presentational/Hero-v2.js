@@ -13,10 +13,14 @@ const Hero = ({
   showComics,
   profilAndData,
   refreshComics,
+  isFetching,
   info }) => {
 
   return (heros) ?
     <div className="collection-v2" >
+      {
+        isFetching ? <Loader /> : null
+      }
       <Profil
         profil={actualProfil}
         showDescription={showDescription}

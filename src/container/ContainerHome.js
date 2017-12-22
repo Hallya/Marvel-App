@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfil, setInfo, fetchRelatedComics } from '../actions/actions';
+import { getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters } from '../actions/actions';
 import Heros from '../presentational/Hero-v2';
-import Comics from '../presentational/Comics';
+import Comics from '../presentational/Comicsv2';
 import Loader from '../presentational/Loader';
 import './ContainerHome.css';
 
@@ -14,6 +14,7 @@ const HomeContainer = ({
   filter,
   showComics,
   setProfilPlusData,
+  setProfilPlusDataCharacters,
   showDescription,
   refreshComics,
   info }) => {
@@ -28,6 +29,7 @@ const HomeContainer = ({
             actualProfil={actualProfil}
             showComics={showComics}
             showDescription={showDescription}
+            isFetching={isFetching}
             info={info}
             profilAndData={setProfilPlusData}
           />
@@ -36,6 +38,13 @@ const HomeContainer = ({
             <Comics
               comics={data}
               filter={filter}
+              setProfil={setProfil}
+              actualProfil={actualProfil}
+              showComics={showComics}
+              showDescription={showDescription}
+              isFetching={isFetching}
+              info={info}
+              profilAndData={setProfilPlusDataCharacters}
             />
             :
             isFetching ? <Loader />
@@ -63,6 +72,9 @@ const mapDispatchToProps = dispatch => {
     },
     getRelatedComics: e => {
       dispatch(fetchRelatedComics(e.target.id));
+    },
+    getRelatedCharacters: e => {
+      dispatch(fetchRelatedCharacters(e.target.id));
     }
   }
 }
@@ -73,14 +85,15 @@ const mapStateToProps = state => {
     actualProfil: state.actualProfil,
     filter: state.visibilityFilter,
     info: state.actualProfil,
-    idCharacter: state.actualProfil.id,
+    actualId: state.actualProfil.id,
     relatedComics: state.actualProfil.relatedData.actualRelatedData,
     isFetchingRelatedComics: state.actualProfil.relatedData.isFetching
   }
 }
 const mergeProps = (stateProps, dispatchProps) => {
-  const { idCharacter } = stateProps,
+  const { actualId } = stateProps,
     { getRelatedComics } = dispatchProps,
+    { getRelatedCharacters } = dispatchProps,
     { relatedComics } = stateProps,
     { isFetchingRelatedComics } = stateProps;
   return {
@@ -88,13 +101,17 @@ const mergeProps = (stateProps, dispatchProps) => {
       getRelatedComics(e);
       dispatchProps.setProfil(e);
     },
+    setProfilPlusDataCharacters: (e) => {
+      getRelatedCharacters(e);
+      dispatchProps.setProfil(e);
+    },
     showComics: (e) => {
       dispatchProps.showComics(e);
-      // getRelatedComics(idCharacter);
+      // getRelatedComics(actualId);
     },
     refreshComics: () => {
       if (relatedComics && isFetchingRelatedComics) 
-        getRelatedComics(idCharacter);
+        getRelatedComics(actualId);
     },
     showDescription: dispatchProps.showDescription,
     setProfil: dispatchProps.setProfil,
@@ -103,7 +120,7 @@ const mergeProps = (stateProps, dispatchProps) => {
     actualProfil: stateProps.actualProfil,
     filter: stateProps.filter,
     info: stateProps.info,
-    idCharacter: stateProps.idCharacter,
+    actualId: stateProps.actualId,
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(HomeContainer);

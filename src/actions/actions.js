@@ -159,6 +159,32 @@ export const fetchRelatedComics = characterId => (dispatch, getState) => {
       json => dispatch(setRelatedComics(characterId, json)))
 };
 
+export const fetchRelatedCharacters = comicId => (dispatch, getState) => {
+  
+  const
+  { actualProfil } = getState(),
+  { relatedData } = actualProfil,
+  { id } = actualProfil,
+  { previousRelatedData } = relatedData;
+  let found;
+
+  if (id && id === comicId) return;
+  found = help.checkForItems(previousRelatedData) ?
+  help.checkItemsById(comicId, previousRelatedData) : null;
+  
+  if (found) {
+    return dispatch(resetRelatedComics(found.data))
+  }
+  dispatch(requestRelatedComics(comicId));
+
+  return fetch(`https://gateway.marvel.com/v1/public/comics/${comicId}/characters?limit=100&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`, {
+    headers
+  }).then(data => data.json(),
+    error => console.log(error))
+    .then(
+      json => dispatch(setRelatedComics(comicId, json)))
+};
+
 export const fetchByLetter = (requestId) => (dispatch, getState) => { 
 
 const
