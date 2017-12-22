@@ -14,6 +14,7 @@ const Hero = ({
   profilAndData,
   refreshComics,
   isFetching,
+  addMoreResult,
   info }) => {
 
   return (heros) ?
@@ -28,7 +29,7 @@ const Hero = ({
         info={info} />
       <div className="mosaique" >
       {
-        heros.data.filter(hero => {
+        heros.data ? heros.data.filter(hero => {
           const match = /image_not_available/;
           if (filter.images && filter.description) {
             return (!match.test(hero.thumbnail.path) && !(hero.description === "" || hero.description === " "))
@@ -52,9 +53,13 @@ const Hero = ({
                 <div className="hero_miniature_frame" id={hero.id} ></div>
               </div>
             )
-        })
+          })
+        : null    
       }
       </div>
+      <div className="container_fetch_more" onClick={addMoreResult} id='characters' >
+        <label className='hero_fetch_more' >More</label>
+      </div>  
     </div> 
     :
     <Loader />;

@@ -41,6 +41,19 @@ function posts(state = initialState, action) {
           ]
         }
       }
+    case act.ADD_MORE:
+      return {
+        ...state,
+        [action.category]: {
+          ...state[action.category],
+          isFetching: false,
+          items: [
+            {
+              ...state[action.category].items[0],
+              data:[...state[action.category].items[0].data, ...action.data]
+            }]
+        }
+      }
     case act.ERROR_POSTS:
       return {
         ...state,
@@ -58,6 +71,10 @@ function posts(state = initialState, action) {
 function actualPage(state = {
   id: null,
   data: [],
+  offset: {
+    characters: 20,
+    comics: 20
+  },
   receivedAt: null,
   isFocused: false
 }, action) {
@@ -77,12 +94,25 @@ function actualPage(state = {
         isFetching: true,
         category: action.category
       };
-    case act.RECEIVE_POSTS:
+    case act.RECEIVE_POSTS:  
       return {
+        ...state,
         id: action.requestId,
+        data: action.posts,
         isFetching: false,
         category: action.category,
-        data: action.posts,
+        receivedAt: action.receivedAt
+      }
+    case act.ADD_MORE:
+      return {
+        ...state,
+        isFetching: false,
+        offset: {
+          ...state.offset,
+         [action.category]: state.offset[action.category] + 20
+        },
+        data: [...state.data.concat(action.data)
+        ],
         receivedAt: action.receivedAt
       }
     case act.GET_SEARCHBAR_FOCUS:

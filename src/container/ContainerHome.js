@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters } from '../actions/actions';
+import { getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters, fetchMore } from '../actions/actions';
 import Heros from '../presentational/Hero-v2';
 import Comics from '../presentational/Comicsv2';
 import Loader from '../presentational/Loader';
@@ -14,6 +14,7 @@ const HomeContainer = ({
   filter,
   showComics,
   setProfilPlusData,
+  addMoreResult,
   setProfilPlusDataCharacters,
   showDescription,
   refreshComics,
@@ -32,9 +33,10 @@ const HomeContainer = ({
             isFetching={isFetching}
             info={info}
             profilAndData={setProfilPlusData}
+            addMoreResult={addMoreResult}
           />
           :
-          data.category === "comics" && !data.isFetching ?
+          data.category === "comics" ?
             <Comics
               comics={data}
               filter={filter}
@@ -45,6 +47,7 @@ const HomeContainer = ({
               isFetching={isFetching}
               info={info}
               profilAndData={setProfilPlusDataCharacters}
+              addMoreResult={addMoreResult}
             />
             :
             isFetching ? <Loader />
@@ -61,6 +64,9 @@ const HomeContainer = ({
 
 const mapDispatchToProps = dispatch => { 
   return {
+    addMore: (currentOffset, category) => {
+      dispatch(fetchMore(currentOffset, category))
+    },
     setProfil: e => {
       dispatch(getProfil(e.target.id));
     },
@@ -80,6 +86,7 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
   return {
+    currentOffset: state.actualPage.offset,
     data: state.actualPage,
     isFetching: state.actualPage.isFetching,
     actualProfil: state.actualProfil,
@@ -95,8 +102,13 @@ const mergeProps = (stateProps, dispatchProps) => {
     { getRelatedComics } = dispatchProps,
     { getRelatedCharacters } = dispatchProps,
     { relatedComics } = stateProps,
-    { isFetchingRelatedComics } = stateProps;
+    { isFetchingRelatedComics } = stateProps,
+    { addMore } = dispatchProps,
+    { currentOffset } = stateProps;
   return {
+    addMoreResult: (e) => {
+      addMore(currentOffset[e.target.id], e.target.id);
+    },
     setProfilPlusData: (e) => {
       getRelatedComics(e);
       dispatchProps.setProfil(e);
@@ -107,7 +119,6 @@ const mergeProps = (stateProps, dispatchProps) => {
     },
     showComics: (e) => {
       dispatchProps.showComics(e);
-      // getRelatedComics(actualId);
     },
     refreshComics: () => {
       if (relatedComics && isFetchingRelatedComics) 

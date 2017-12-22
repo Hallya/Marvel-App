@@ -5,6 +5,7 @@ headers.set('Referer', 'http://localhost:8000/');
 export const REQUEST_RELATED_DATA = 'REQUEST_RELATED_DATA';
 export const REQUEST_POSTS = 'REQUEST_POSTS';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
+export const ADD_MORE = 'ADD_MORE';
 export const SET_RELATED_COMICS = 'SET_RELATED_COMICS';
 export const RESET_RELATED_COMICS = 'RESET_RELATED_COMICS';
 export const ERROR_POSTS = 'ERROR_POSTS';
@@ -102,7 +103,11 @@ export const receiveFetch = (category, json, requestId) => ({
   category,
   requestId
 });
-
+export const addMore = (category, data) => ({
+  type: ADD_MORE,
+  data: data.data.results,
+  category
+})
 
 export const fetchCategory = (category, requestId) => (dispatch, getState) => { 
 
@@ -187,24 +192,36 @@ export const fetchRelatedCharacters = comicId => (dispatch, getState) => {
 
 export const fetchByLetter = (requestId) => (dispatch, getState) => { 
 
-const
-{ posts, actualPage } = getState(),
-cat = posts['characters'],
-{ lastFetchId } = cat,
-{ id } = actualPage;
+  const
+  { posts, actualPage } = getState(),
+  cat = posts['characters'],
+  { lastFetchId } = cat,
+  { id } = actualPage;
 
-let found;
+  let found;
 
-if (lastFetchId && id === requestId) return;
+  if (lastFetchId && id === requestId) return;
 
-found = help.checkForItems(cat.items) ?
-help.checkItemsById(requestId, cat.items) : null;
-if (found) return dispatch(setCurrentPage(requestId, 'characters', found));
+  found = help.checkForItems(cat.items) ?
+  help.checkItemsById(requestId, cat.items) : null;
+  if (found) return dispatch(setCurrentPage(requestId, 'characters', found));
 
-dispatch(requestFetch('characters', requestId));
+  dispatch(requestFetch('characters', requestId));
   return fetch(`https://gateway.marvel.com/v1/public/characters?nameStartsWith=${requestId}&limit=100&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`).then(data => data.json())
   .then(
   json => dispatch(receiveFetch('characters', json, requestId)),
   error => console.log(error)
   );
 };
+
+export const fetchMore = (offset, category) => (dispatch) => {
+  dispatch(requestFetch(category, `${category}?offeset=${offset}`));
+  return fetch(`https://gateway.marvel.com/v1/public/${category}?offset=${offset}&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`).then(data => data.json())
+    .then(
+    json => {
+      dispatch(addMore(category, json))
+    },
+    error => console.log(error)
+    );
+}
+

@@ -7,6 +7,7 @@ const Profil = ({
   showComics,
   showDescription,
   refreshComics,
+  actualPage,
   info }) => {
 
   return (
@@ -57,11 +58,15 @@ const Profil = ({
               <div>
                 <p className="profil_comics_found">
                   {
-                    profil.data.characters.available ?
-                      profil.data.characters.available
-                      : 0
+                    !actualPage.isFetching && profil.data.characters ? 
+                        profil.data.characters.available
+                        : 0
                   } Character{
-                    profil.data.characters.available <= 1 ? "" : "s"
+                    !actualPage.isFetching && profil.data.characters ?
+                      profil.data.characters.available <= 1 ?
+                        ""
+                        : "s"
+                      : null
                   } found
                 </p>
               </div>

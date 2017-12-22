@@ -14,6 +14,7 @@ const Comics = ({
   profilAndData,
   refreshComics,
   isFetching,
+  addMoreResult,
   info }) => {
 
   return (comics) ?
@@ -26,10 +27,11 @@ const Comics = ({
         showDescription={showDescription}
         showComics={showComics}
         info={info}
+        actualPage={comics}
       />
       <div className="mosaique" >
         {
-          comics.data.filter(comic => {
+          comics.data ? comics.data.filter(comic => {
             const match = /image_not_available/;
             if (filter.images && filter.description) {
               return (!match.test(comic.thumbnail.path) && !(comic.description === "" || comic.description === " "))
@@ -54,7 +56,11 @@ const Comics = ({
               </div>
             )
           })
-        }
+          : null  
+        } 
+      </div>
+      <div className="container_fetch_more" onClick={addMoreResult} id='comics'>
+        <label className='hero_fetch_more' >More</label>
       </div>
     </div>
     :
