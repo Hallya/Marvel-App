@@ -42,6 +42,7 @@ class Alphabet extends React.Component{
 
   getHerosStartingWith = (e) => {
     if (this.state.expanded) {
+      e.target.style="color: white";
       return this.props.fetchByLetter(e);
     }
   }

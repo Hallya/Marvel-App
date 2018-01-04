@@ -1,4 +1,4 @@
-@keyframes brightnessAnim {
+/* @keyframes brightnessAnim {
   0% {
     filter: brightness(1) contrast(1.5) grayscale(0.3)
   }
@@ -14,20 +14,17 @@
   100% {
     transform: rotate(5deg)
   }
-} 
+}  */
 
 #background {
 position: fixed;
-  width: 120vw;
+  width: 100vw;
   height: 120vh;
-  top: -10vh;
-  left: -10vw;
+  /* top: -10vh;
+  left: -10vw; */
   z-index: -1;
-  /* filter: brightness(1.2) contrast(1.5) grayscale(0.1); */
-  /* transform: rotate(5deg) translateZ(0); */
-  /* animation: brightnessAnim 5s infinite linear both alternate,
-  rotateBackground 10s infinite ease-in-out both alternate; */
   background: url('../assets/marvel-background.jpg');
   background-repeat: no-repeat;
-  background-size: 220ch 110%;
+  background-size: 100vw 110%;
+  animation: brightnessAnim 2s infinite ease-in-out alternate both;
 }

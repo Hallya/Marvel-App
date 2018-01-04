@@ -58,12 +58,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onCharactersClick: () => {
-      console.log('Fetching characters from Marvel\'s API');
       dispatch(setProfil(null, null));
-      dispatch(fetchCategory('characters', 'characters?limit=20offset=0'));
+      dispatch(fetchCategory('characters', 'characters?limit=20&offset=0'));
     },
     onComicsClick: () => {
-      console.log('Fetching comics from Marvel\'s API');
       dispatch(setProfil(null, null));
       dispatch(fetchCategory('comics', 'comics?limit=20offset=0'));
     },

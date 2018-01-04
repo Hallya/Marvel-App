@@ -7,6 +7,8 @@ export const REQUEST_POSTS = 'REQUEST_POSTS';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const ADD_MORE = 'ADD_MORE';
 export const SET_RELATED_COMICS = 'SET_RELATED_COMICS';
+export const SET_RELATED_DATA = 'SET_RELATED_DATA';
+export const SET_DISPLAY_FALSE = 'SET_DISPLAY_FALSE';
 export const RESET_RELATED_COMICS = 'RESET_RELATED_COMICS';
 export const ERROR_POSTS = 'ERROR_POSTS';
 export const SET_INFO = 'SET_INFO';
@@ -29,7 +31,6 @@ export const getProfil = (id) => (dispatch, getState) => {
   if (lastId === id) return;
   let found = data.find(item => item.id === Number(id))
   if (found) {
-    console.log(`You have selected ${found.name}`)
     return dispatch(setProfil(id, found))
   }
   return console.error(`Character's data found: ${found}`)
@@ -49,6 +50,14 @@ export function resetRelatedComics(data) {
   return {
     type: RESET_RELATED_COMICS,
     data
+  }
+}
+
+export function setRelatedData(id, data) {
+  return {
+    type: SET_RELATED_DATA,
+    data,
+    id
   }
 }
 
@@ -88,6 +97,11 @@ export function setCurrentPage(requestId, category, data) {
   };
 }
 
+export const setFalseOnDisplay = () => {
+  return {
+    type: SET_DISPLAY_FALSE
+  };
+}
 
 export const requestRelatedComics = (id) => ({
   type: REQUEST_RELATED_DATA,
@@ -215,13 +229,26 @@ export const fetchByLetter = (requestId) => (dispatch, getState) => {
 };
 
 export const fetchMore = (offset, category) => (dispatch) => {
-  dispatch(requestFetch(category, `${category}?offeset=${offset}`));
-  return fetch(`https://gateway.marvel.com/v1/public/${category}?offset=${offset}&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`).then(data => data.json())
-    .then(
-    json => {
+  dispatch(requestFetch(category, `${category}?offset=${offset}`));
+  return fetch(`https://gateway.marvel.com/v1/public/${category}?limit=20&offset=${offset}&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`)
+    .then(data => data.json())
+    .then(json => {
       dispatch(addMore(category, json))
     },
     error => console.log(error)
     );
 }
 
+export const fetchComic = id => dispatch => {
+  return fetch(`https://gateway.marvel.com/v1/public/comics/${id}?apikey=489e135d84bbc1a810a3a8ec86eef28e`)
+    .then(data => data.json(),
+      error => console.log(error))
+    .then(json => dispatch(setRelatedData(id, json.data.results[0])))
+}
+
+export const fetchCharacter = id => dispatch => {
+  return fetch(`https://gateway.marvel.com/v1/public/characters/${id}?apikey=489e135d84bbc1a810a3a8ec86eef28e`)
+    .then(data => data.json(),
+      error => console.log(error))
+    .then(json => dispatch(setRelatedData(id, json.data.results[0])))
+}

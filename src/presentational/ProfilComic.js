@@ -18,13 +18,13 @@ const Profil = ({
             <img
               className="profil__img"  
               src={`${profil.data.thumbnail.path}.${profil.data.thumbnail.extension}`}
-              alt={`Face of ${profil.data.name}`}
+              alt="Comic's cover"
             />
             <div className="profil_img_frame"></div>
           </div>
           <div className="profil_hero_infos">
             <p className="profil__name"
-              onChange={refreshComics}>{profil.data.name}</p>
+              onChange={refreshComics}>{profil.data.title}</p>
             <form >
               <ul>
                 <li className="profil_select_info"

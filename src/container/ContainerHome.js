@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters, fetchMore } from '../actions/actions';
+import { getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters, fetchMore, setFalseOnDisplay } from '../actions/actions';
 import Heros from '../presentational/Hero-v2';
 import Comics from '../presentational/Comicsv2';
 import Loader from '../presentational/Loader';
@@ -18,6 +18,8 @@ const HomeContainer = ({
   setProfilPlusDataCharacters,
   showDescription,
   refreshComics,
+  displayRelatedData,
+  closeTab,
   info }) => {
   return (
     <div className="content__container" >
@@ -34,6 +36,8 @@ const HomeContainer = ({
             info={info}
             profilAndData={setProfilPlusData}
             addMoreResult={addMoreResult}
+            closeTab={closeTab}
+            displayRelatedData={displayRelatedData}
           />
           :
           data.category === "comics" ?
@@ -46,8 +50,10 @@ const HomeContainer = ({
               showDescription={showDescription}
               isFetching={isFetching}
               info={info}
+              closeTab={closeTab}
               profilAndData={setProfilPlusDataCharacters}
               addMoreResult={addMoreResult}
+              displayRelatedData={displayRelatedData}
             />
             :
             isFetching ? <Loader />
@@ -81,6 +87,9 @@ const mapDispatchToProps = dispatch => {
     },
     getRelatedCharacters: e => {
       dispatch(fetchRelatedCharacters(e.target.id));
+    },
+    closeTab: () => {
+      dispatch(setFalseOnDisplay());
     }
   }
 }
@@ -94,11 +103,13 @@ const mapStateToProps = state => {
     info: state.actualProfil,
     actualId: state.actualProfil.id,
     relatedComics: state.actualProfil.relatedData.actualRelatedData,
-    isFetchingRelatedComics: state.actualProfil.relatedData.isFetching
+    isFetchingRelatedComics: state.actualProfil.relatedData.isFetching,
+    displayRelatedData: state.relatedData
   }
 }
 const mergeProps = (stateProps, dispatchProps) => {
-  const { actualId } = stateProps,
+  const
+    { actualId } = stateProps,
     { getRelatedComics } = dispatchProps,
     { getRelatedCharacters } = dispatchProps,
     { relatedComics } = stateProps,
@@ -132,6 +143,8 @@ const mergeProps = (stateProps, dispatchProps) => {
     filter: stateProps.filter,
     info: stateProps.info,
     actualId: stateProps.actualId,
+    displayRelatedData: stateProps.displayRelatedData,
+    closeTab: dispatchProps.closeTab
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(HomeContainer);

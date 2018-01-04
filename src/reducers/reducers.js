@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import * as act from '../actions/actions';
+import * as help from '../helpers/helpers';
 
 const initialState = {
   characters: {
@@ -42,6 +43,9 @@ function posts(state = initialState, action) {
         }
       }
     case act.ADD_MORE:
+      let filteredResults = action.data.filter(comic => {
+        return !help.checkItemsById(comic.id, state[action.category].items[0].data);
+      })
       return {
         ...state,
         [action.category]: {
@@ -50,7 +54,9 @@ function posts(state = initialState, action) {
           items: [
             {
               ...state[action.category].items[0],
-              data:[...state[action.category].items[0].data, ...action.data]
+              data: [
+                ...state[action.category].items[0].data, ...filteredResults
+              ]
             }]
         }
       }
@@ -104,6 +110,9 @@ function actualPage(state = {
         receivedAt: action.receivedAt
       }
     case act.ADD_MORE:
+      let filteredResults = action.data.filter(comic => {
+        return !help.checkItemsById(comic.id, state.data);
+      })  
       return {
         ...state,
         isFetching: false,
@@ -111,7 +120,7 @@ function actualPage(state = {
           ...state.offset,
          [action.category]: state.offset[action.category] + 20
         },
-        data: [...state.data.concat(action.data)
+        data: [...state.data.concat(filteredResults)
         ],
         receivedAt: action.receivedAt
       }
@@ -190,6 +199,24 @@ function actualProfil(state = {
   }
 }
 
+function relatedData(state = {data:null,displayed:false}, action) {
+  switch (action.type) {
+    case act.SET_RELATED_DATA:
+      return {
+        ...state,
+        data: action.data,
+        displayed: true
+      }
+    case act.SET_DISPLAY_FALSE:
+      return {
+        ...state,
+        displayed: false
+      }
+    default:
+      return state;
+  }
+}
+
 function visibilityFilter(state = {
   images: false,
   description: false
@@ -214,7 +241,8 @@ const rootReducer = combineReducers({
   actualPage,
   actualProfil,
   posts,
-  visibilityFilter
+  visibilityFilter,
+  relatedData
 });
 
 export default rootReducer;

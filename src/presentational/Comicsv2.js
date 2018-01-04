@@ -2,6 +2,7 @@ import React from 'react';
 import './Comics-v2.css';
 import Loader from './Loader';
 import ProfilComic from './ProfilComic';
+import RelatedData from './Related-data';
 
 const Comics = ({
   comics,
@@ -14,6 +15,8 @@ const Comics = ({
   profilAndData,
   refreshComics,
   isFetching,
+  closeTab,
+  displayRelatedData,
   addMoreResult,
   info }) => {
 
@@ -29,39 +32,47 @@ const Comics = ({
         info={info}
         actualPage={comics}
       />
-      <div className="mosaique" >
-        {
-          comics.data ? comics.data.filter(comic => {
-            const match = /image_not_available/;
-            if (filter.images && filter.description) {
-              return (!match.test(comic.thumbnail.path) && !(comic.description === "" || comic.description === " "))
-            }
-            else if (filter.images && !filter.description) {
-              return (!match.test(comic.thumbnail.path));
-            }
-            else if (filter.description && !filter.images) {
-              return !(comic.description === null);
-            }
-            return comic;
-          }).map(comic => {
-            return (
-              <div className="comic__miniature" key={comic.id} onClick={profilAndData} >
-                <img
-                  className="comic__img"
+      <div className='wrapperLeft'>  
+        <div className={displayRelatedData.displayed ? "mosaiqueHidden" : "mosaique"} >
+          {
+            comics.data ? comics.data.filter(comic => {
+              const match = /image_not_available/;
+              if (filter.images && filter.description) {
+                return (!match.test(comic.thumbnail.path) && !(comic.description === "" || comic.description === null))
+              }
+              else if (filter.images && !filter.description) {
+                return (!match.test(comic.thumbnail.path));
+              }
+              else if (filter.description && !filter.images) {
+                return !(comic.description === null);
+              }
+              return comic;
+            }).map(comic => {
+              return (
+                <div className="comic__miniature" key={comic.id} onClick={profilAndData} >
+                  <img
+                    className="comic__img"
 
-                  src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
-                  alt='Identity of comic'
-                />
-                <div className="comic_miniature_frame" id={comic.id} ></div>
-              </div>
-            )
-          })
-          : null  
-        } 
+                    src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+                    alt='Identity of comic'
+                  />
+                  <div className="comic_miniature_frame" id={comic.id} ></div>
+                </div>
+              )
+            })
+            : null  
+          } 
+        </div>
+        <RelatedData displayRelatedData={displayRelatedData} closeTab={closeTab} />
       </div>
-      <div className="container_fetch_more" onClick={addMoreResult} id='comics'>
-        <label className='hero_fetch_more' >More</label>
-      </div>
+      {
+        displayRelatedData.displayed ?
+          null
+          :
+          <div className="container_fetch_more" onClick={addMoreResult} id='comics'>
+            <label className='hero_fetch_more' >More</label>
+          </div>
+      }
     </div>
     :
     <Loader />;
