@@ -9,7 +9,7 @@ const RelatedData = ({displayRelatedData, closeTab}) => {
         <span id="left" ></span>
         <span id="right" ></span>
       </div>  
-      <div className={data.displayed ? "frameI" : ""}>
+      <div className={data.displayed ? "frameI active" : "frameI"}>
         <img src={data.data ? `${data.data.thumbnail.path}.${data.data.thumbnail.extension}`:null} />
       </div>
       <div className="wrapper name" >

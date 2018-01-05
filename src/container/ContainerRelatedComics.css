@@ -5,3 +5,10 @@
   overflow: scroll;
   padding: 0;
 }
+
+.list_Comics li {
+  cursor: pointer;
+}
+.list_Comics li:hover {
+  color: green;
+}

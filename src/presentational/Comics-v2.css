@@ -15,6 +15,11 @@
   overflow: hidden;
   position: relative;
   background: #1b2752c9;
+  transition: 0.1s;
+}
+.comic__miniature:hover {
+  transform: perspective(500px) scaleZ(2) translateZ(20px);
+  z-index: 5;
 }
 
 .comic__img {

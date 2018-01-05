@@ -7,9 +7,16 @@ class Alphabet extends React.Component{
     super(props);
     this.state = {
       offset: 0,
-      expanded: false
+      expanded: false,
+      selectedLetters: []
     }
-  }  
+  }
+
+  colorSelectedLetters = e => {
+    const letter = e;
+    if (this.state.selectedLetters.find(e => e === letter)) return ("Selected");
+    else return ("notSelected");
+  }
 
   changeLetters = e => {
     const tick = () =>
@@ -42,7 +49,7 @@ class Alphabet extends React.Component{
 
   getHerosStartingWith = (e) => {
     if (this.state.expanded) {
-      e.target.style="color: white";
+      this.setState({ selectedLetters: [...this.state.selectedLetters, e.target.textContent] });
       return this.props.fetchByLetter(e);
     }
   }
@@ -52,6 +59,7 @@ class Alphabet extends React.Component{
         changeLetters={this.changeLetters}
         renderLetters={this.renderLetters()}
         fetchByLetter={this.getHerosStartingWith}
+        checkLetters={this.colorSelectedLetters}
       />
     )
   }

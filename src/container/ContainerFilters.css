@@ -1,9 +1,48 @@
+@keyframes showfilter {
+  0% {
+    transform: translateY(-10em);
+  }
+  1%{
+    display: inherit;
+  }
+  100% {
+    transform: translateY(-0.6em);
+  }
+}
+
+@keyframes hideToggle {
+  0% {
+    opacity: 1;
+  }
+  50% {opacity: 0}
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
 .filter {
   font-size: 0.5em;
   transition: 0.2s;
   cursor: pointer;
+  list-style: none;
 }
 
 .filter:hover {
   color: rgb(77, 0, 0);
+}
+
+.toggling_menu{
+  font-size: 0.9em;
+  display: inherit;
+}
+.toggling_menu_hidden {
+  animation: hideToggle 0.5s normal ease-in forwards;
+}
+
+.filterMenuHidden {
+  display: none;
+}
+.filterMenu {
+  animation: showfilter 0.5s normal ease-in-out forwards;
 }
