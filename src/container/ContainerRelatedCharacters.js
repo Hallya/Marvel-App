@@ -3,16 +3,25 @@ import { connect } from 'react-redux';
 import { fetchCharacter } from '../actions/actions';
 import './ContainerRelatedCharacters.css'
 
-const ContainerRelatedComics = ({ comics, setCharacterToProfil }) => {
-  let actualRelatedData = comics.actualRelatedData;
+const ContainerRelatedCharacters = ({ characters, setCharacterToProfil, data }) => {
+  let actualRelatedData = characters.actualRelatedData;
   return (
     <ul className="list_Comics" >
       {
-        (actualRelatedData && actualRelatedData.length > 0 && !comics.isFetching) ? actualRelatedData.map(comic => {
-          return <li key={comic.id} id={comic.id} onClick={setCharacterToProfil}>{comic.name}</li>
+        (actualRelatedData && actualRelatedData.length > 0 && !characters.isFetching) ? actualRelatedData.map(character => {
+          return(
+            <li
+              key={character.id}
+              id={character.id}
+              onClick={setCharacterToProfil}
+              style={data && character.id === data.id ? {color: "green"} : {color: "inherit"}}
+            >
+              {character.name}
+            </li>
+          )
         })
         :
-          (actualRelatedData.length === 0 || !actualRelatedData) && !comics.isFetching ?
+          (actualRelatedData.length === 0 || !actualRelatedData) && !characters.isFetching ?
           "N/A"
           :
           "Loading characters..."  
@@ -32,10 +41,11 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    comics: state.actualProfil.relatedData,
+    characters: state.actualProfil.relatedData,
+    data: state.relatedData.data
   }
 }
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContainerRelatedComics);
+export default connect(mapStateToProps, mapDispatchToProps)(ContainerRelatedCharacters);

@@ -1,0 +1,353 @@
+{
+  "code": 200,
+  "status": "Ok",
+  "copyright": "© 2018 MARVEL",
+  "attributionText": "Data provided by Marvel. © 2018 MARVEL",
+  "attributionHTML": "<a href=\"http://marvel.com\">Data provided by Marvel. © 2018 MARVEL<\/a>",
+  "etag": "3f970b6deb008b2d026f7181afe8e7ae09f21813",
+  "data": {
+    "offset": 0,
+    "limit": 20,
+    "total": 1,
+    "count": 1,
+    "results": [
+      {
+        "id": 1009156,
+        "name": "Apocalypse",
+        "description": "",
+        "modified": "2013-10-18T12:48:43-0400",
+        "thumbnail": {
+          "path": "http://i.annihil.us/u/prod/marvel/i/mg/f/e0/526166076a1d0",
+          "extension": "jpg"
+        },
+        "resourceURI": "http://gateway.marvel.com/v1/public/characters/1009156",
+        "comics": {
+          "available": 94,
+          "collectionURI": "http://gateway.marvel.com/v1/public/characters/1009156/comics",
+          "items": [
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/29205",
+              "name": "Avengers (2010) #2"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/29206",
+              "name": "Avengers (2010) #3"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/34142",
+              "name": "Avengers (2010) #3 (ROMITA JR. VARIANT)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/7459",
+              "name": "Cable (1993) #8"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/24171",
+              "name": "Cable (2008) #14"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/24172",
+              "name": "Cable (2008) #14 (OLIVETTI MW, 50/50 COVER)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/24631",
+              "name": "Cable (2008) #15"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/24632",
+              "name": "Cable (2008) #15 (OLIVETTI (MW, 50/50 COVER))"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/7410",
+              "name": "Cable (1993) #35"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/7444",
+              "name": "Cable (1993) #66"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/7454",
+              "name": "Cable (1993) #75"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/39445",
+              "name": "Essential X-Factor Vol. 2 (All-New Edition) (Trade Paperback)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/55262",
+              "name": "Extraordinary X-Men Vol. 3: Kingdoms Fall (Trade Paperback)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/60188",
+              "name": "Further Adventures of Cyclops & Phoenix (1996) #4"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/9267",
+              "name": "Incredible Hulk (1962) #456"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/26022",
+              "name": "Mystic Comics 70th Anniversary Special (2009) #1 (MARTIN VARIANT)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/1489",
+              "name": "Official Handbook of the Marvel Universe (2004) #8"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/1590",
+              "name": "Official Handbook of the Marvel Universe (2004) #9 (THE WOMEN OF MARVEL)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/1689",
+              "name": "Official Handbook of the Marvel Universe (2004) #10 (MARVEL KNIGHTS)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/comics/1749",
+              "name": "Official Handbook of the Marvel Universe (2004) #11 (X-MEN - AGE OF APOCALYPSE)"
+            }
+          ],
+          "returned": 20
+        },
+        "series": {
+          "available": 48,
+          "collectionURI": "http://gateway.marvel.com/v1/public/characters/1009156/series",
+          "items": [
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/9085",
+              "name": "Avengers (2010 - 2012)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/1995",
+              "name": "Cable (1993 - 2002)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/4002",
+              "name": "Cable (2008 - 2010)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/14400",
+              "name": "Essential X-Factor Vol. 2 (All-New Edition) (2011 - Present)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/20418",
+              "name": "Extraordinary X-Men Vol. 3: Kingdoms Fall (2017)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/22173",
+              "name": "Further Adventures of Cyclops & Phoenix (1996)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/2021",
+              "name": "Incredible Hulk (1962 - 1999)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/8138",
+              "name": "Mystic Comics 70th Anniversary Special (2009)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/787",
+              "name": "Official Handbook of the Marvel Universe (2004)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/2057",
+              "name": "Onslaught: Marvel Universe (1996)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/22174",
+              "name": "Rise of Apocalypse (1996 - 1997)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/17927",
+              "name": "Stryfe's Strike File (1993)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/16414",
+              "name": "Uncanny Avengers (2012 - Present)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/9976",
+              "name": "Uncanny X-Force (2010 - 2012)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/2258",
+              "name": "Uncanny X-Men (1963 - 2011)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/1075",
+              "name": "What If? X-Men Age of Apocalypse (2006)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/2425",
+              "name": "What If?: Event Horizon (2007)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/2262",
+              "name": "Wolverine (1988 - 2003)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/84",
+              "name": "Wolverine/Deadpool: Weapon X (1999)"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/series/23663",
+              "name": "Wolverine: The Jungle Adventure (1989)"
+            }
+          ],
+          "returned": 20
+        },
+        "stories": {
+          "available": 94,
+          "collectionURI": "http://gateway.marvel.com/v1/public/characters/1009156/stories",
+          "items": [
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/477",
+              "name": "Cover #477",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/664",
+              "name": "X-MEN (2004) #183",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/666",
+              "name": "X-MEN (2004) #184",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/668",
+              "name": "X-MEN (2004) #185",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/4153",
+              "name": "Cover #4153",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/4223",
+              "name": "Cover #4223",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/4430",
+              "name": "Cover #4430",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/4513",
+              "name": "Cover #4513",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/4612",
+              "name": "Cover #4612",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/4614",
+              "name": "Cover #4614",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/5919",
+              "name": "Cover #5919",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/19075",
+              "name": "...Meet War!",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22203",
+              "name": "Whose Death Is It, Anyway?",
+              "type": "interiorStory"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22207",
+              "name": "Die, Mutants, Die!",
+              "type": "interiorStory"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22210",
+              "name": "The Horsemen of Apocalypse",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22221",
+              "name": "You Say You Want Some Evolution?",
+              "type": "interiorStory"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22222",
+              "name": "Fall of the Mutants",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22224",
+              "name": "Fall of the Mutants",
+              "type": "cover"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22229",
+              "name": "Gifts!",
+              "type": "interiorStory"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/stories/22273",
+              "name": "Guardian",
+              "type": "interiorStory"
+            }
+          ],
+          "returned": 20
+        },
+        "events": {
+          "available": 6,
+          "collectionURI": "http://gateway.marvel.com/v1/public/characters/1009156/events",
+          "items": [
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/events/116",
+              "name": "Acts of Vengeance!"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/events/227",
+              "name": "Age of Apocalypse"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/events/246",
+              "name": "Evolutionary War"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/events/248",
+              "name": "Fall of the Mutants"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/events/298",
+              "name": "Messiah War"
+            },
+            {
+              "resourceURI": "http://gateway.marvel.com/v1/public/events/154",
+              "name": "Onslaught"
+            }
+          ],
+          "returned": 6
+        },
+        "urls": [
+          {
+            "type": "detail",
+            "url": "http://marvel.com/comics/characters/1009156/apocalypse?utm_campaign=apiRef&utm_source=489e135d84bbc1a810a3a8ec86eef28e"
+          },
+          {
+            "type": "wiki",
+            "url": "http://marvel.com/universe/Apocalypse_(En_Sabah_Nur)?utm_campaign=apiRef&utm_source=489e135d84bbc1a810a3a8ec86eef28e"
+          },
+          {
+            "type": "comiclink",
+            "url": "http://marvel.com/comics/characters/1009156/apocalypse?utm_campaign=apiRef&utm_source=489e135d84bbc1a810a3a8ec86eef28e"
+          }
+        ]
+      }
+    ]
+  }
+}

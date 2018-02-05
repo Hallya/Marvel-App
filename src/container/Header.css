@@ -20,6 +20,7 @@ h1 {
 .tabs {
   margin: 0;
   padding: 0 0em 0.5em 0;
+  overflow: hidden;
   height: 1.5em;
   list-style: none;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;

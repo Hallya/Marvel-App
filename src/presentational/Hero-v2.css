@@ -59,8 +59,9 @@
     background: #1b2752c9;
     }
     .hero__miniature:hover{
-       transform: perspective(500px) scaleZ(2) translateZ(20px);
-       z-index: 5;
+      /* backface-visibility: hidden; */
+      transform: perspective(500px) scaleZ(2) translateZ(20px);
+      z-index: 5;
     }
       .hero__img {
         width: auto;

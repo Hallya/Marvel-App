@@ -19,7 +19,17 @@ const RelatedData = ({displayRelatedData, closeTab}) => {
         <hr />
       </div>  
       <div className="wrapper description" >
-        <p className="text" id="description" >{data.data?data.data.description:"Description missing..."}</p>
+        <p className="text" id="description" >
+          {
+            data.data ?
+              data.data.description.length < 10 ?
+                "Description missing..."
+                :
+                data.data.description  
+            :
+            null
+          }
+        </p>
       </div>
       <div className="frame_description" ></div>
     </div>

@@ -28,13 +28,18 @@ export const getProfil = (id) => (dispatch, getState) => {
         { actualProfil } = getState(),
         { data } = actualPage,
     lastId = actualProfil.id;
+
   if (lastId === id) return;
   let found = data.find(item => item.id === Number(id))
+ 
   if (found) {
     return dispatch(setProfil(id, found))
   }
-  return console.error(`Character's data found: ${found}`)
+
+  console.error(`data not found`);
+  return;
 }
+
 export function getSearchbarFocus() {
   return {
     type: GET_SEARCHBAR_FOCUS
@@ -103,6 +108,7 @@ export const setFalseOnDisplay = () => {
   };
 }
 
+
 export const requestRelatedComics = (id) => ({
   type: REQUEST_RELATED_DATA,
   id
@@ -120,8 +126,16 @@ export const receiveFetch = (category, json, requestId) => ({
 export const addMore = (category, data) => ({
   type: ADD_MORE,
   data: data.data.results,
-  category
+  category,
 })
+
+export const newError = (category, error) => ({
+  type: ERROR_POSTS,
+  category,
+  error
+})
+
+
 
 export const fetchCategory = (category, requestId) => (dispatch, getState) => { 
 
@@ -129,8 +143,8 @@ export const fetchCategory = (category, requestId) => (dispatch, getState) => {
     { posts, actualPage } = getState(),
     cat = posts[category],
     { lastFetchId } = cat,
-    { id } = actualPage;
-
+  { id } = actualPage;
+  
   let found;
 
   if (lastFetchId && id === requestId) {
@@ -144,13 +158,10 @@ export const fetchCategory = (category, requestId) => (dispatch, getState) => {
   dispatch(requestFetch(category, requestId));
 
   return fetch(`https://gateway.marvel.com/v1/public/${requestId}&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`).then(data => data.json())
-    .then(
-    json => dispatch(receiveFetch(category, json, requestId)),
+    .then(json => dispatch(receiveFetch(category, json, requestId)),
     error => console.log(error)
     );
 };
-
-
 
 export const fetchRelatedComics = characterId => (dispatch, getState) => {
   
@@ -174,8 +185,7 @@ export const fetchRelatedComics = characterId => (dispatch, getState) => {
     headers
   }).then(data => data.json(),
     error => console.log(error))
-    .then(
-      json => dispatch(setRelatedComics(characterId, json)))
+    .then(json => dispatch(setRelatedComics(characterId, json)))
 };
 
 export const fetchRelatedCharacters = comicId => (dispatch, getState) => {
@@ -192,7 +202,8 @@ export const fetchRelatedCharacters = comicId => (dispatch, getState) => {
   help.checkItemsById(comicId, previousRelatedData) : null;
   
   if (found) {
-    return dispatch(resetRelatedComics(found.data))
+    dispatch(resetRelatedComics(found.data));
+    return;
   }
   dispatch(requestRelatedComics(comicId));
 
@@ -200,8 +211,7 @@ export const fetchRelatedCharacters = comicId => (dispatch, getState) => {
     headers
   }).then(data => data.json(),
     error => console.log(error))
-    .then(
-      json => dispatch(setRelatedComics(comicId, json)))
+    .then(json => dispatch(setRelatedComics(comicId, json)))
 };
 
 export const fetchByLetter = (requestId) => (dispatch, getState) => { 
@@ -223,7 +233,7 @@ export const fetchByLetter = (requestId) => (dispatch, getState) => {
   dispatch(requestFetch('characters', requestId));
   return fetch(`https://gateway.marvel.com/v1/public/characters?nameStartsWith=${requestId}&limit=100&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`).then(data => data.json())
   .then(
-  json => dispatch(receiveFetch('characters', json, requestId)),
+    json => dispatch(receiveFetch('characters', json, requestId)),
   error => console.log(error)
   );
 };
@@ -232,9 +242,7 @@ export const fetchMore = (offset, category) => (dispatch) => {
   dispatch(requestFetch(category, `${category}?offset=${offset}`));
   return fetch(`https://gateway.marvel.com/v1/public/${category}?limit=20&offset=${offset}&apikey=dadf1ca6c54468f0ed5cdbb80d4b1f97`)
     .then(data => data.json())
-    .then(json => {
-      dispatch(addMore(category, json))
-    },
+    .then(json => dispatch(addMore(category, json)),
     error => console.log(error)
     );
 }
@@ -252,3 +260,74 @@ export const fetchCharacter = id => dispatch => {
       error => console.log(error))
     .then(json => dispatch(setRelatedData(id, json.data.results[0])))
 }
+
+
+
+
+// export const fetch = (id, category, reducer) => (dispatch, getState) => {
+  
+//   if (!shouldFetch(id, category, reducer, getState)) {
+//     return getFromCache(id, category, reducer, getState);
+//   }
+  
+//   dispatch(requestFetch(id, category));
+  
+//   return fetch(`https://gateway.marvel.com/v1/public/${category}${id}apikey=489e135d84bbc1a810a3a8ec86eef28e`)
+//     .then(data => data.json(), error => console.log(error))
+//     .then(json => {
+//       selectWhichActionToDispatch(id, category, json, dispatch)
+//     });
+// }
+
+// const shouldFetch = (idRequest, category, reducer, getState) => {
+  
+//   const checkForCache;
+  
+//   switch (reducer) {
+//     case 'actualPage':
+//       const
+//         { posts } = getState(), actualPage = getState()[reducer],
+//         { id } = actualPage, { cat } = posts[category];
+      
+//       if (id === idRequest) return;
+//       checkForCache = help.checkForItems(cat.items) ? help.checkItemsById(idRequest, cat.items) : null;
+//       if (found) return
+
+//     case 'actualProfil':
+      
+//       return  
+
+//     default:
+//       return;
+      
+//   }
+// }
+
+// const getFromCache = (id, category, reducer, getState) => {
+
+// }
+
+// const selectWhichActionToDispatch = (id, category, json, dispatch) => {
+
+// }
+
+
+// { posts, actualPage } = getState(),
+//   cat = posts[category],
+//   { lastFetchId } = cat,
+//   { id } = actualPage;
+
+// { posts, actualPage } = getState(),
+//   cat = posts['characters'],
+//   { lastFetchId } = cat,
+//   { id } = actualPage;
+
+// { actualProfil } = getState(),
+//   { relatedData } = actualProfil,
+//   { id } = actualProfil,
+//   { previousRelatedData } = relatedData;
+
+// { actualProfil } = getState(),
+//   { relatedData } = actualProfil,
+//   { id } = actualProfil,
+//   { previousRelatedData } = relatedData;

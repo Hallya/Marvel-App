@@ -13,17 +13,21 @@
 @keyframes hideToggle {
   0% {
     opacity: 1;
+    transform: translateY(-0.6em);
   }
-  50% {opacity: 0}
-  100% {
+  99% {
     opacity: 0;
+    transform: translateY(-0.6em);
+  }
+  100%{
+    transform: translateY(-0.6em);
     display: none;
   }
 }
 
 .filter {
   font-size: 0.5em;
-  transition: 0.2s;
+  transition: 0.2s;e
   cursor: pointer;
   list-style: none;
 }
@@ -35,14 +39,15 @@
 .toggling_menu{
   font-size: 0.9em;
   display: inherit;
+  opacity: 1;
 }
 .toggling_menu_hidden {
-  animation: hideToggle 0.5s normal ease-in forwards;
+  animation: hideToggle 1s normal forwards;
 }
 
 .filterMenuHidden {
   display: none;
 }
 .filterMenu {
-  animation: showfilter 0.5s normal ease-in-out forwards;
+  animation: showfilter 1s normal ease-in-out forwards;
 }
