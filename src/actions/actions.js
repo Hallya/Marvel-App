@@ -23,20 +23,25 @@ export const VisibilityFilters = {
   SHOW_DESCRIPTION: 'SHOW_DESCRIPTION',
 };
 
-export const getProfil = (id) => (dispatch, getState) => {
-  const { actualPage } = getState(),
-        { actualProfil } = getState(),
-        { data } = actualPage,
-    lastId = actualProfil.id;
+export const actualiseProfil = dispatch => data => dispatch(setProfil(data.id, data))
 
-  if (lastId === id) return;
-  let found = data.find(item => item.id === Number(id))
- 
+export const getProfil =  state => id => {
+  console.log(id, state);
+  const
+  { actualPage } = state,
+  { actualProfil } = state,
+  { data } = actualPage,
+  lastId = actualProfil.id;
+
+  if (lastId === id) {
+    return;
+  }
+  const found = data.find(item => item.id === Number(id));
   if (found) {
-    return dispatch(setProfil(id, found))
+    return found;
   }
 
-  console.error(`data not found`);
+  console.error(`No data found`);
   return;
 }
 

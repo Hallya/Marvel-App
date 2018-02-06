@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters, fetchMore, setFalseOnDisplay } from '../actions/actions';
+import { chainTwoFunction, actualiseProfil, getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters, fetchMore, setFalseOnDisplay } from '../actions/actions';
 import Heros from '../presentational/Hero-v2';
 import Comics from '../presentational/Comicsv2';
 import Loader from '../presentational/Loader';
 import './ContainerHome.css';
+import { actualPage } from '../reducers/reducers';
 
 const HomeContainer = ({
   data,
@@ -73,9 +74,7 @@ const mapDispatchToProps = dispatch => {
     addMore: (currentOffset, category) => {
       dispatch(fetchMore(currentOffset, category))
     },
-    setProfil: e => {
-      dispatch(getProfil(e.target.id));
-    },
+    setProfil: actualiseProfil(dispatch),
     showDescription: e => {
       dispatch(setInfo('description'))
     },
@@ -95,6 +94,7 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
   return {
+    getProfil: () => getProfil(state),
     currentOffset: state.actualPage.offset,
     data: state.actualPage,
     isFetching: state.actualPage.isFetching,
@@ -109,24 +109,27 @@ const mapStateToProps = state => {
 }
 const mergeProps = (stateProps, dispatchProps) => {
   const
+    { getProfil } = stateProps,
     { actualId } = stateProps,
-    { getRelatedComics } = dispatchProps,
-    { getRelatedCharacters } = dispatchProps,
+    { currentOffset } = stateProps,
     { relatedComics } = stateProps,
     { isFetchingRelatedComics } = stateProps,
     { addMore } = dispatchProps,
-    { currentOffset } = stateProps;
+    { setProfil } = dispatchProps,
+    { getRelatedComics } = dispatchProps,
+    { getRelatedCharacters } = dispatchProps;
+  
   return {
     addMoreResult: (e) => {
       addMore(currentOffset[e.target.id], e.target.id);
     },
     setProfilPlusData: (e) => {
       getRelatedComics(e);
-      dispatchProps.setProfil(e);
+      setProfil(getProfil()(e.target.id))
     },
     setProfilPlusDataCharacters: (e) => {
       getRelatedCharacters(e);
-      dispatchProps.setProfil(e);
+      setProfil(e);
     },
     showComics: (e) => {
       dispatchProps.showComics(e);
