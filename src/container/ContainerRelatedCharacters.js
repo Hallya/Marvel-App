@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCharacter } from '../actions/actions';
+import { fetchComic, fetchContent, setData } from '../actions/actions';
+import { createRequestId, getConditions } from '../helpers/helpers';
 import './ContainerRelatedCharacters.css'
 
 const ContainerRelatedCharacters = ({ characters, setCharacterToProfil, data }) => {
@@ -33,8 +34,10 @@ const ContainerRelatedCharacters = ({ characters, setCharacterToProfil, data }) 
 const mapDispatchToProps = dispatch => {
   return {
     setCharacterToProfil: e => {
-      console.log(e.target.id)
-      dispatch(fetchCharacter(e.target.id))
+      const requestId = createRequestId(e.target.id, getConditions("chOnly"));
+      fetchContent(requestId)
+        .then(data => dispatch(setData(requestId, data)))
+        .catch(error => console.error(error))
     }
   }
 }

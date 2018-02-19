@@ -1,7 +1,8 @@
 import React from 'react';
 import ContainerSearch from '../container/ContainerSearch';
 import Filters from './ContainerFilters';
-import { fetchCategory, setProfil } from '../actions/actions';
+import { fetchOrGetCache } from '../actions/actions';
+import { getConditions, createRequestId } from '../helpers/helpers';
 import { connect } from 'react-redux';
 import Alphabet from '../container/ContainerAlphabet';
 import './Header.css';
@@ -17,7 +18,7 @@ const Header = ({
   onSearchIconClick,
   onLeaveInput,
   searchbarFocus,
-  selectedCategory
+  actualPage
 }, ) => {
   return(
     <div className="header">
@@ -28,7 +29,7 @@ const Header = ({
           className="tab"
           onClick={onCharactersClick}
           id="characters"
-          style={selectedCategory.category === "characters" ? selectedCat : null}> Characters
+          style={actualPage.category === "characters" ? selectedCat : null}> Characters
         </li>
         <li>
           <ContainerSearch
@@ -41,7 +42,7 @@ const Header = ({
           className="tab"
           onClick={onComicsClick}
           id="comics"
-          style={selectedCategory.category === "comics" ? selectedCat : null}> Comics
+          style={actualPage.category === "comics" ? selectedCat : null}> Comics
         </li>
         <li><Filters/></li>
       </ul>
@@ -51,21 +52,33 @@ const Header = ({
 
 const mapStateToProps = state => {
   return {
-    selectedCategory: state.actualPage
+    actualPage: state.actualPage,
+    posts: state.posts
   }
 }
 
 const mapDispatchToProps = dispatch => {
+  
   return {
-    onCharactersClick: () => {
-      dispatch(setProfil(null, null));
-      dispatch(fetchCategory('characters', 'characters?limit=20&offset=0'));
-    },
-    onComicsClick: () => {
-      dispatch(setProfil(null, null));
-      dispatch(fetchCategory('comics', 'comics?limit=20offset=0'));
-    },
+    fetchOrGetCache: (id, category, lastFetch, reducer) => dispatch(fetchOrGetCache(id, category, lastFetch, reducer)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+const mergeProps = (stateProps, dispatchProps) => {
+  
+  const
+    idChar = createRequestId("0", getConditions("ch")),
+    idCom = createRequestId("0", getConditions("co")),
+    characters = "characters",
+    comics = "comics",
+    lastFetch = stateProps.actualPage.id,
+    storedCache = stateProps.posts.cached
+  
+  return {
+    onCharactersClick: () => dispatchProps.fetchOrGetCache(idChar, characters, lastFetch, storedCache),
+    onComicsClick: () => dispatchProps.fetchOrGetCache(idCom, comics, lastFetch, storedCache),
+    actualPage: stateProps.actualPage
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Header);

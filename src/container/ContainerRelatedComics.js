@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchComic } from '../actions/actions'
+import { fetchComic, fetchContent, setData } from '../actions/actions';
+import { createRequestId, getConditions } from '../helpers/helpers';
 import './ContainerRelatedComics.css'
 
 const ContainerRelatedComics = ({ comics, setComicToProfil, data }) => {
@@ -28,7 +29,10 @@ const ContainerRelatedComics = ({ comics, setComicToProfil, data }) => {
 const mapDispatchToProps = dispatch => { 
   return {
     setComicToProfil: e => {
-      dispatch(fetchComic(e.target.id))
+      const requestId = createRequestId(e.target.id, getConditions("coOnly"));
+      fetchContent(requestId)
+        .then(data => dispatch(setData(requestId, data)))
+        .catch(error => console.error(error))
     }
   }
 }

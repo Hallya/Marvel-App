@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { chainTwoFunction, actualiseProfil, getProfil, setInfo, fetchRelatedComics, fetchRelatedCharacters, fetchMore, setFalseOnDisplay } from '../actions/actions';
+import * as action from '../actions/actions';
+import { getConditions, createRequestId, getCache, doubleRequest } from '../helpers/helpers';
 import Heros from '../presentational/Hero-v2';
 import Comics from '../presentational/Comicsv2';
 import Loader from '../presentational/Loader';
 import './ContainerHome.css';
 import { actualPage } from '../reducers/reducers';
+import { fetchRelatedCharacters, fetchContent } from '../actions/actions';
 
 const HomeContainer = ({
-  data,
+  actualPage,
   isFetching,
   setProfil,
   actualProfil,
@@ -16,53 +18,52 @@ const HomeContainer = ({
   showComics,
   setProfilPlusData,
   addMoreResult,
-  setProfilPlusDataCharacters,
   showDescription,
   refreshComics,
-  displayRelatedData,
-  closeTab,
-  info }) => {
+  relatedData,
+  closeTab
+}) => {
   return (
     <div className="content__container" >
       {
-        data.category === "characters" ?
+        actualPage.category === "characters" ?
           <Heros
-            heros={data}
+            heros={actualPage}
             filter={filter}
             setProfil={setProfil}
             actualProfil={actualProfil}
             showComics={showComics}
             showDescription={showDescription}
-            isFetching={isFetching}
-            info={info}
+            isFetching={actualPage.isFetching}
+            info={actualProfil}
             profilAndData={setProfilPlusData}
             addMoreResult={addMoreResult}
             closeTab={closeTab}
-            displayRelatedData={displayRelatedData}
+            displayRelatedData={relatedData}
           />
           :
-          data.category === "comics" ?
+          actualPage.category === "comics" ?
             <Comics
-              comics={data}
+              comics={actualPage}
               filter={filter}
               setProfil={setProfil}
               actualProfil={actualProfil}
               showComics={showComics}
               showDescription={showDescription}
-              isFetching={isFetching}
-              info={info}
+              isFetching={actualPage.isFetching}
+              info={actualProfil}
               closeTab={closeTab}
-              profilAndData={setProfilPlusDataCharacters}
+              profilAndData={setProfilPlusData}
               addMoreResult={addMoreResult}
-              displayRelatedData={displayRelatedData}
+              displayRelatedData={relatedData}
             />
             :
-            isFetching ? <Loader />
+            actualPage.isFetching ? <Loader />
               :
               ""
       }
       {
-        data.category === undefined && !isFetching ?
+        actualPage.category === undefined && !isFetching ?
         <p className="home_message" >SELECT A CATEGORY</p> : null
       }
     </div>
@@ -71,82 +72,77 @@ const HomeContainer = ({
 
 const mapDispatchToProps = dispatch => { 
   return {
-    addMore: (currentOffset, category) => {
-      dispatch(fetchMore(currentOffset, category))
-    },
-    setProfil: actualiseProfil(dispatch),
-    showDescription: e => {
-      dispatch(setInfo('description'))
-    },
-    showComics: e => {
-        dispatch(setInfo('comics'))
-    },
-    getRelatedComics: e => {
-      dispatch(fetchRelatedComics(e.target.id));
-    },
-    getRelatedCharacters: e => {
-      dispatch(fetchRelatedCharacters(e.target.id));
-    },
-    closeTab: () => {
-      dispatch(setFalseOnDisplay());
-    }
+    setProfil: action.actualiseProfil(dispatch),
+    showDescription: e => dispatch(action.setInfo('description')),
+    showComics: e => dispatch(action.setInfo('comics')),
+    requestRelatedData: requestId => dispatch(action.requestRelatedData(requestId)),
+    requestFetch: (category, requestId) => dispatch(action.requestFetch(category, requestId)),
+    addMore: (category, data) => dispatch(action.addMore(category, data)),
+    setRelatedData: (requestId, data) => dispatch(action.setRelatedData(requestId, data)),
+    resetRelatedData: (id, data) => dispatch(action.resetRelatedData(id, data)),
+    closeTab: () => dispatch(action.setFalseOnDisplay())
   }
 }
 const mapStateToProps = state => {
   return {
-    getProfil: () => getProfil(state),
-    currentOffset: state.actualPage.offset,
-    data: state.actualPage,
-    isFetching: state.actualPage.isFetching,
+    getProfil: () => action.getProfil(state),
+    actualPage: state.actualPage,
     actualProfil: state.actualProfil,
     filter: state.visibilityFilter,
-    info: state.actualProfil,
-    actualId: state.actualProfil.id,
-    relatedComics: state.actualProfil.relatedData.actualRelatedData,
-    isFetchingRelatedComics: state.actualProfil.relatedData.isFetching,
-    displayRelatedData: state.relatedData
+    relatedData: state.relatedData
   }
 }
+
 const mergeProps = (stateProps, dispatchProps) => {
   const
     { getProfil } = stateProps,
-    { actualId } = stateProps,
-    { currentOffset } = stateProps,
-    { relatedComics } = stateProps,
-    { isFetchingRelatedComics } = stateProps,
-    { addMore } = dispatchProps,
+    { actualPage } = stateProps,
+    { actualProfil } = stateProps,
+    { requestFetch } = dispatchProps,
+    { requestRelatedData } = dispatchProps,
+    { resetRelatedData } = dispatchProps,
+    { setRelatedData } = dispatchProps,
     { setProfil } = dispatchProps,
-    { getRelatedComics } = dispatchProps,
-    { getRelatedCharacters } = dispatchProps;
+    { addMore } = dispatchProps,
+    characters = "characters",
+    comics = "comics";
   
   return {
+
     addMoreResult: (e) => {
-      addMore(currentOffset[e.target.id], e.target.id);
+
+      const requestId = createRequestId((20 + actualPage.offset).toString(), getConditions(actualPage.category === characters ? "co" : "ch"));
+      requestFetch(e.target.id, requestId);
+      fetchContent(requestId)
+        .then(data => addMore(actualPage.category, data))
+        .catch(err => console.error(err))
     },
+
     setProfilPlusData: (e) => {
-      getRelatedComics(e);
-      setProfil(getProfil()(e.target.id))
+
+      const requestId = createRequestId(e.target.id, getConditions(actualPage.category === characters ? "relCo" : "relCh"));
+
+      if (!doubleRequest(requestId, actualProfil.id)) {
+        const cacheRelatedData = getCache(requestId, actualProfil.relatedData.previousRelatedData);
+        if (cacheRelatedData) {
+          resetRelatedData(requestId, cacheRelatedData.data);
+        }
+        else {
+          requestRelatedData(requestId);
+          fetchContent(requestId)
+            .then(data => setRelatedData(requestId, data))
+            .catch(err => console.error(err))
+        }
+        return setProfil(getProfil()(e.target.id))
+      }
     },
-    setProfilPlusDataCharacters: (e) => {
-      getRelatedCharacters(e);
-      setProfil(e);
-    },
-    showComics: (e) => {
-      dispatchProps.showComics(e);
-    },
-    refreshComics: () => {
-      if (relatedComics && isFetchingRelatedComics) 
-        getRelatedComics(actualId);
-    },
+    showComics: e => dispatchProps.showComics(e),
     showDescription: dispatchProps.showDescription,
     setProfil: dispatchProps.setProfil,
-    data: stateProps.data,
-    isFetching: stateProps.isFetching,
-    actualProfil: stateProps.actualProfil,
+    actualPage: actualPage,
+    actualProfil: actualProfil,
     filter: stateProps.filter,
-    info: stateProps.info,
-    actualId: stateProps.actualId,
-    displayRelatedData: stateProps.displayRelatedData,
+    relatedData: stateProps.relatedData,
     closeTab: dispatchProps.closeTab
   }
 }

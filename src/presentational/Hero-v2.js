@@ -28,6 +28,7 @@ const Hero = ({
         profil={actualProfil}
         showDescription={showDescription}
         showComics={showComics}
+        heros={heros}
         info={info} />
       <div className='wrapperLeft'>
         <div className={displayRelatedData.displayed ? "mosaiqueHidden" : "mosaique"} >

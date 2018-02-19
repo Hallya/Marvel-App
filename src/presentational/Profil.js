@@ -6,6 +6,7 @@ const Profil = ({
   profil,
   showComics,
   showDescription,
+  heros,
   refreshComics,
   info }) => {
 
@@ -56,7 +57,12 @@ const Profil = ({
               <hr/>
               <div>
                 <p className="profil_comics_found">
-                  {profil.data.comics.available ? profil.data.comics.available : 0} Comics found
+                  {
+                    profil.data.comics ?
+                      profil.data.comics.available ? profil.data.comics.available : 0
+                      :
+                      null
+                  } Comics found
                 </p>
               </div>
             </form>  
