@@ -18,6 +18,7 @@ const Hero = ({
   addMoreResult,
   displayRelatedData,
   closeTab,
+  loadMore,
   info }) => {
   return (heros) ?
     <div className="collection-v2" >
@@ -31,7 +32,7 @@ const Hero = ({
         heros={heros}
         info={info} />
       <div className='wrapperLeft'>
-        <div className={displayRelatedData.displayed ? "mosaiqueHidden" : "mosaique"} >
+        <div className={displayRelatedData.displayed ? "mosaiqueHidden" : "mosaique"} onScroll={loadMore} >
         {
           heros.data ? heros.data.filter(hero => {
             const match = /image_not_available/;
@@ -63,14 +64,6 @@ const Hero = ({
         </div>
         <RelatedData displayRelatedData={displayRelatedData} closeTab={closeTab} />
       </div>
-      {
-        displayRelatedData.displayed ?
-          null
-          :
-          <div className="container_fetch_more" onClick={addMoreResult} id='characters' >
-            <label className='hero_fetch_more' >More</label>
-          </div>
-      }
     </div> 
     :
     <Loader />;

@@ -15,6 +15,7 @@ const Comics = ({
   profilAndData,
   refreshComics,
   isFetching,
+  loadMore,
   closeTab,
   displayRelatedData,
   addMoreResult,
@@ -33,7 +34,7 @@ const Comics = ({
         actualPage={comics}
       />
       <div className='wrapperLeft'>  
-        <div className={displayRelatedData.displayed ? "mosaiqueHidden" : "mosaique"} >
+        <div className={displayRelatedData.displayed ? "mosaiqueHidden" : "mosaique"} onScroll={loadMore} >
           {
             comics.data ? comics.data.filter(comic => {
               const match = /image_not_available/;
@@ -65,14 +66,6 @@ const Comics = ({
         </div>
         <RelatedData displayRelatedData={displayRelatedData} closeTab={closeTab} />
       </div>
-      {
-        displayRelatedData.displayed ?
-          null
-          :
-          <div className="container_fetch_more" onClick={addMoreResult} id='comics'>
-            <label className='hero_fetch_more' >More</label>
-          </div>
-      }
     </div>
     :
     <Loader />;

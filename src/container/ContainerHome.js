@@ -18,6 +18,7 @@ const HomeContainer = ({
   showComics,
   setProfilPlusData,
   addMoreResult,
+  loadMore,
   showDescription,
   refreshComics,
   relatedData,
@@ -29,6 +30,7 @@ const HomeContainer = ({
         actualPage.category === "characters" ?
           <Heros
             heros={actualPage}
+            loadMore={loadMore}
             filter={filter}
             setProfil={setProfil}
             actualProfil={actualProfil}
@@ -45,6 +47,7 @@ const HomeContainer = ({
           actualPage.category === "comics" ?
             <Comics
               comics={actualPage}
+              loadMore={loadMore}
               filter={filter}
               setProfil={setProfil}
               actualProfil={actualProfil}
@@ -109,15 +112,6 @@ const mergeProps = (stateProps, dispatchProps) => {
   
   return {
 
-    addMoreResult: (e) => {
-
-      const requestId = createRequestId((20 + actualPage.offset).toString(), getConditions(actualPage.category === characters ? "co" : "ch"));
-      requestFetch(e.target.id, requestId);
-      fetchContent(requestId)
-        .then(data => addMore(actualPage.category, data))
-        .catch(err => console.error(err))
-    },
-
     setProfilPlusData: (e) => {
 
       const requestId = createRequestId(e.target.id, getConditions(actualPage.category === characters ? "relCo" : "relCh"));
@@ -134,6 +128,20 @@ const mergeProps = (stateProps, dispatchProps) => {
             .catch(err => console.error(err))
         }
         return setProfil(getProfil()(e.target.id))
+      }
+    },
+    loadMore: (e) => {
+      
+      const mosaiqueVisibleHeight = e.target.clientHeight;
+      const pixelScroll = e.target.scrollTop;
+      const mosaiqueHeight = e.target.scrollHeight;
+
+      if (mosaiqueVisibleHeight + pixelScroll === mosaiqueHeight) {
+        const requestId = createRequestId((20 + actualPage.offset).toString(), getConditions(actualPage.category === characters ? "ch" : "co"));
+        requestFetch(actualPage.category, requestId);
+        fetchContent(requestId)
+          .then(data => addMore(actualPage.category, data))
+          .catch(err => console.error(err))
       }
     },
     showComics: e => dispatchProps.showComics(e),

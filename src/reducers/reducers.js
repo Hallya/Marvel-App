@@ -67,10 +67,12 @@ export function actualPage(state = {
 }, action) {
   switch (action.type) {
     case act.SET_CURRENT_PAGE:
+  
       return {
         ...state,
         id: action.requestId,
         category: action.category,
+        offset: 0,
         data: action.data.data,
         receivedAt: action.receivedAt
       };
@@ -88,7 +90,7 @@ export function actualPage(state = {
         isFetching: false,
         category: action.category,
         receivedAt: action.receivedAt
-      }
+      };
     case act.ADD_MORE:
       let filteredResults = action.data.filter(obj => {
         return !help.getCache(obj.id, state.data);
@@ -99,7 +101,7 @@ export function actualPage(state = {
         offset: state.offset + 20,
         data: [...state.data.concat(filteredResults)
         ]
-      }
+      };
     case act.GET_SEARCHBAR_FOCUS:
       return {
         ...state,
