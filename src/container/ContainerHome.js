@@ -38,9 +38,9 @@ const HomeContainer = ({
             showDescription={showDescription}
             isFetching={actualPage.isFetching}
             info={actualProfil}
+            closeTab={closeTab}
             profilAndData={setProfilPlusData}
             addMoreResult={addMoreResult}
-            closeTab={closeTab}
             displayRelatedData={relatedData}
           />
           :

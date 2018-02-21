@@ -115,7 +115,7 @@ export const setFalseOnDisplay = () => {
 }
 
 
-export const requestRelatedData = (id) => ({
+export const requestRelatedData = id => ({
   type: REQUEST_RELATED_DATA,
   id
 });

@@ -15,10 +15,10 @@ const Comics = ({
   profilAndData,
   refreshComics,
   isFetching,
-  loadMore,
-  closeTab,
-  displayRelatedData,
   addMoreResult,
+  displayRelatedData,
+  closeTab,
+  loadMore,
   info }) => {
 
   return (comics) ?

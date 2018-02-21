@@ -24,7 +24,7 @@ export const createRequestId = (id, conditions) => {
     case 'search':
       return request + `?nameStartsWith=${id}&limit=100&`;
     case 'browsing':
-      return request +`?limit=20&offset=${id}&`;  
+      return request +`?limit=30&offset=${id}&`;  
     case 'single':
       return request + `/${id}?`
     case 'related':

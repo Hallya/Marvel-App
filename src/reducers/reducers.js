@@ -98,7 +98,7 @@ export function actualPage(state = {
       return {
         ...state,
         isFetching: false,
-        offset: state.offset + 20,
+        offset: state.offset + 30,
         data: [...state.data.concat(filteredResults)
         ]
       };

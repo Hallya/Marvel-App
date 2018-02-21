@@ -5,13 +5,7 @@ import * as reducer from "../reducers/reducers";
 import fetchByLetter from "../../__mocks__/API_Responses/fetchByLetter.json";
 import fetchCharacter from "../../__mocks__/API_Responses/fetchCharacter.json";
 import fetchCharacters from "../../__mocks__/API_Responses/fetchCharacters.json";
-import fetchComic from "../../__mocks__/API_Responses/fetchComic.json";
-import fetchComics from "../../__mocks__/API_Responses/fetchComics.json";
-import fetchMoreCharacters from "../../__mocks__/API_Responses/fetchMoreCharacters.json";
-import fetchMoreComics from "../../__mocks__/API_Responses/fetchMoreComics.json";
-import fetchRelatedCharacters from "../../__mocks__/API_Responses/fetchRelatedCharacters.json";
-import fetchRelatedComics from "../../__mocks__/API_Responses/fetchRelatedComics.json";
-
+import somethingFetched from "../../__mocks__/API_Responses/fetchComic.json";
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk'
 // import fetchMock from 'fetch-mock';
@@ -30,6 +24,8 @@ const requestCharacters = "characters?limit=20&offset=0";
 // CONFIGURATION OF REDUX STORE AND REDUX THUNK
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+//FIXED DATE
+Date = jest.fn(() => 1482363367071);
 
 describe("Simples actions", () => {
 
@@ -57,41 +53,38 @@ describe("Simples actions", () => {
     expect(act.setFalseOnDisplay()).toEqual(expectedAction)
   })
 
-  it("RESET_RELATED_COMICS:: should return an action with data", () => {
+  it("RESET_RELATED_DATA:: should return an action with data", () => {
     const expectedAction = {
-      type: "RESET_RELATED_COMICS",
+      type: "RESET_RELATED_DATA",
+      data: {
+        data: 0
+      },
+      id: idComic
+    }
+
+    expect(act.resetRelatedData(idComic, {data: 0})).toEqual(expectedAction)
+  })
+
+  it("SET_DATA:: should return an action with an id and data", () => {
+    const expectedAction = {
+      type: "SET_DATA",
+      id: idComic,
       data: {
         data: 0
       }
     }
 
-    expect(act.resetRelatedComics({
-      data: 0
-    })).toEqual(expectedAction)
+    expect(act.setData(idComic, {data: 0})).toEqual(expectedAction)
   })
 
   it("SET_RELATED_DATA:: should return an action with an id and data", () => {
     const expectedAction = {
       type: "SET_RELATED_DATA",
       id: idComic,
-      data: {
-        data: 0
-      }
+      data: 0
     }
 
     expect(act.setRelatedData(idComic, {
-      data: 0
-    })).toEqual(expectedAction)
-  })
-
-  it("SET_RELATED_COMICS:: should return an action with an id and data", () => {
-    const expectedAction = {
-      type: "SET_RELATED_COMICS",
-      id: idComic,
-      data: 0
-    }
-
-    expect(act.setRelatedComics(idComic, {
       data: {
         results: 0
       }
@@ -160,7 +153,7 @@ describe("Simples actions", () => {
       id: idComic,
     }
 
-    expect(act.requestRelatedComics(idComic)).toEqual(expectedAction)
+    expect(act.requestRelatedData(idComic)).toEqual(expectedAction)
   })
 
   it("REQUEST_POSTS:: should return an action with a requestId and a category ", () => {
@@ -188,570 +181,48 @@ describe("Simples actions", () => {
   })
 })
 
+
 describe("Asyncs actions", () => {
 
-  Date = jest.fn(() => 1482363367071);
   
-  it('Function fetchCategory:: create 2 actions (REQUEST_POSTS & RECEIVE_POSTS) and fetch the first 20 characters', () => {
+  it('Function fetchContent:: fetch content from API and return an Object', () => {
 
-    fetch.mockResponse(JSON.stringify(fetchCharacters));
+    fetch.mockResponse(JSON.stringify(somethingFetched));
 
-    const store = mockStore({
-      actualPage: {
-        id: null,
-        data: [],
-        offset: {
-          characters: 20,
-          comics: 20
-        },
-        receivedAt: null,
-        isFocused: false
-      },
-      posts: {
-        characters: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        },
-        comics: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        }
-      }
-    })
-
-    return store.dispatch(act.fetchCategory(catCharacters, requestCharacters)).then(() => {
-      expect(store.getActions()).toMatchSnapshot()
-    })
-  })
-  it('Function fetchRelatedComics:: create 2 actions (REQUEST_RELATED_DATA & SET_RELATED_COMICS) and fetch 8 comics related to a character', () => {
-
-    fetch.mockResponse(JSON.stringify(fetchRelatedComics));
-
-    const store = mockStore({
-      actualProfil: {
-        id: null,
-        data: null,
-        infosDisplayed: null,
-        relatedData: {
-          isFetching: false,
-          actualRelatedData: [],
-          previousRelatedData: []
-        }
-      }
-    })
-
-    return store.dispatch(act.fetchRelatedComics(idCharacter)).then(() => {
-      expect(store.getActions()).toMatchSnapshot()
-    })
-  })
-  it('Function fetchRelatedCharacters:: create 2 actions (REQUEST_RELATED_DATA & SET_RELATED_COMICS) and fetch the first 14\'s characters related to a comic', () => {
-    fetch.mockResponse(JSON.stringify(fetchRelatedCharacters));
-
-    const store = mockStore({
-      actualProfil: {
-        id: null,
-        data: null,
-        infosDisplayed: null,
-        relatedData: {
-          isFetching: false,
-          actualRelatedData: [],
-          previousRelatedData: []
-        }
-      }
-    })
-
-    return store.dispatch(act.fetchRelatedCharacters(idComic)).then(() => {
-      expect(store.getActions()).toMatchSnapshot();
-    })
-  })
-
-  it('Function fetchByLetter:: create 2 actions (REQUEST_POSTS & RECEIVE_POSTS) and fetch all characters which name begin by \'a\'', () => {
-
-    fetch.mockResponse(JSON.stringify(fetchByLetter));
-
-    const store = mockStore({
-      actualPage: {
-        id: null,
-        data: [],
-        offset: {
-          characters: 20,
-          comics: 20
-        },
-        receivedAt: null,
-        isFocused: false
-      },
-      posts: {
-        characters: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        },
-        comics: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        }
-      }
-    })
-
-    return store.dispatch(act.fetchByLetter("a")).then(() => {
-      expect(store.getActions()).toMatchSnapshot();
-    })
-  })
-  it('Function fetchMore (characters):: create 2 actions (REQUEST_POSTS & ADD_MORE) and fetch 20 more characters', () => {
-
-    fetch.mockResponse(JSON.stringify(fetchMoreCharacters));
-
-    const store = mockStore({
-      actualPage: {
-        id: null,
-        data: [],
-        offset: {
-          characters: 20,
-          comics: 20
-        },
-        receivedAt: null,
-        isFocused: false
-      },
-      posts: {
-        characters: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        },
-        comics: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        }
-      }
-    })
-
-    return store.dispatch(act.fetchMore(20, catCharacters)).then(() => {
-      expect(store.getActions()).toMatchSnapshot()
-    })
-  })
-  it('Function fetchMore (comics):: create 2 actions (REQUEST_POSTS & ADD_MORE) and fetch 20 more comics', () => {
-
-    fetch.mockResponse(JSON.stringify(fetchMoreComics));
-
-    const store = mockStore({
-      actualPage: {
-        id: null,
-        data: [],
-        offset: {
-          characters: 20,
-          comics: 20
-        },
-        receivedAt: null,
-        isFocused: false
-      },
-      posts: {
-        characters: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        },
-        comics: {
-          lastFetchId: null,
-          items: [],
-          isFetching: false,
-        }
-      }
-    })
-
-    return store.dispatch(act.fetchMore(20, catComics)).then(() => {
-      expect(store.getActions()).toMatchSnapshot()
-    })
-  })
-  it('Function fetchCharacter:: create 1 actions (SET_RELATED_DATA) and fetch 1 character', () => {
-
-    fetch.mockResponse(JSON.stringify(fetchCharacter));
-    
-    const store = mockStore({
-      relatedData: {
-        data: null,
-        displayed: false
-      }
-    })
-
-    return store.dispatch(act.fetchCharacter(1009156)).then(() => {
-      expect(store.getActions()).toMatchSnapshot()
-    })
-  })
-  it('Function fetchComic:: create 1 actions (SET_RELATED_DATA) and fetch 1 comic', () => {
-
-    fetch.mockResponse(JSON.stringify(fetchComic));
-
-    const store = mockStore({
-      relatedData: {
-        data: null,
-        displayed: false
-      }
-    })
-
-    return store.dispatch(act.fetchComic(2539)).then(() => {
-      expect(store.getActions()).toMatchSnapshot()
+    act.fetchContent().then(response => {
+      expect(response).toMatchSnapshot()
     })
   })
 })
 
+
 describe("Helpers & sync action", () => {
   
-  it('Function getProfil:: should get data from cache stored if found', () => {
+  it('Function createRequestId:: should get return a part of an URL generated by conditions defined', () => {
 
-    const expectedActions = [{
-      type: act.SET_PROFIL,
-      id: 1017100,
-      data: {
-        id: 1017100,
-        name: 'A-Bomb (HAS)',
-        description: 'Rick Jones has been Hulk\'s best bud since day one, but now he\'s more than a friend...he\'s a teammate! Transformed by a Gamma energy explosion, A-Bomb\'s thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction! ',
-        modified: '2013-09-18T15:54:04-0400',
-        thumbnail: {
-          path: 'http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16',
-          extension: 'jpg'
-        },
-        resourceURI: 'http://gateway.marvel.com/v1/public/characters/1017100',
-        comics: {
-          available: 0,
-          collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/comics',
-          items: [],
-          returned: 0
-        },
-        series: {
-          available: 0,
-          collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/series',
-          items: [],
-          returned: 0
-        },
-        stories: {
-          available: 1,
-          collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/stories',
-          items: [{
-            resourceURI: 'http://gateway.marvel.com/v1/public/stories/105929',
-            name: 'cover from Free Comic Book Day 2013 (Avengers/Hulk) (2013) #1',
-            type: 'cover'
-          }],
-          returned: 1
-        },
-        events: {
-          available: 0,
-          collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/events',
-          items: [],
-          returned: 0
-        },
-        urls: [{
-            type: 'detail',
-            url: 'http://marvel.com/characters/76/a-bomb?utm_campaign=apiRef&utm_source=dadf1ca6c54468f0ed5cdbb80d4b1f97'
-          },
-          {
-            type: 'comiclink',
-            url: 'http://marvel.com/comics/characters/1017100/a-bomb_has?utm_campaign=apiRef&utm_source=dadf1ca6c54468f0ed5cdbb80d4b1f97'
-          }
-        ]
-      }
-    }]
+    const expectedUrl = "characters?limit=30&offset=0&";
+    const condition = {
+      type: "browsing",
+      category: "characters",
+      idKnown: false
+    }
 
-    const store = mockStore({
-      actualPage: {
-        id: "characters?limit=20&offset=0",
-        data: [
-          {
-            id: 1011334,
-            name: '3-D Man',
-            description: '',
-            modified: '2014-04-29T14:18:17-0400',
-            thumbnail: {
-              path: 'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784',
-              extension: 'jpg'
-            },
-            resourceURI: 'http://gateway.marvel.com/v1/public/characters/1011334',
-            comics: {
-              available: 12,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1011334/comics',
-              items: [{
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/21366',
-                  name: 'Avengers: The Initiative (2007) #14'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/24571',
-                  name: 'Avengers: The Initiative (2007) #14 (SPOTLIGHT VARIANT)'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/21546',
-                  name: 'Avengers: The Initiative (2007) #15'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/21741',
-                  name: 'Avengers: The Initiative (2007) #16'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/21975',
-                  name: 'Avengers: The Initiative (2007) #17'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/22299',
-                  name: 'Avengers: The Initiative (2007) #18'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/22300',
-                  name: 'Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/22506',
-                  name: 'Avengers: The Initiative (2007) #19'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/8500',
-                  name: 'Deadpool (1997) #44'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/10223',
-                  name: 'Marvel Premiere (1972) #35'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/10224',
-                  name: 'Marvel Premiere (1972) #36'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/comics/10225',
-                  name: 'Marvel Premiere (1972) #37'
-                }
-              ],
-              returned: 12
-            },
-            series: {
-              available: 3,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1011334/series',
-              items: [{
-                  resourceURI: 'http://gateway.marvel.com/v1/public/series/1945',
-                  name: 'Avengers: The Initiative (2007 - 2010)'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/series/2005',
-                  name: 'Deadpool (1997 - 2002)'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/series/2045',
-                  name: 'Marvel Premiere (1972 - 1981)'
-                }
-              ],
-              returned: 3
-            },
-            stories: {
-              available: 21,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1011334/stories',
-              items: [{
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/19947',
-                  name: 'Cover #19947',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/19948',
-                  name: 'The 3-D Man!',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/19949',
-                  name: 'Cover #19949',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/19950',
-                  name: 'The Devil\'s Music!',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/19951',
-                  name: 'Cover #19951',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/19952',
-                  name: 'Code-Name:  The Cold Warrior!',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/47184',
-                  name: 'AVENGERS: THE INITIATIVE (2007) #14',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/47185',
-                  name: 'Avengers: The Initiative (2007) #14 - Int',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/47498',
-                  name: 'AVENGERS: THE INITIATIVE (2007) #15',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/47499',
-                  name: 'Avengers: The Initiative (2007) #15 - Int',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/47792',
-                  name: 'AVENGERS: THE INITIATIVE (2007) #16',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/47793',
-                  name: 'Avengers: The Initiative (2007) #16 - Int',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/48361',
-                  name: 'AVENGERS: THE INITIATIVE (2007) #17',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/48362',
-                  name: 'Avengers: The Initiative (2007) #17 - Int',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/49103',
-                  name: 'AVENGERS: THE INITIATIVE (2007) #18',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/49104',
-                  name: 'Avengers: The Initiative (2007) #18 - Int',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/49106',
-                  name: 'Avengers: The Initiative (2007) #18, Zombie Variant - Int',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/49888',
-                  name: 'AVENGERS: THE INITIATIVE (2007) #19',
-                  type: 'cover'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/49889',
-                  name: 'Avengers: The Initiative (2007) #19 - Int',
-                  type: 'interiorStory'
-                },
-                {
-                  resourceURI: 'http://gateway.marvel.com/v1/public/stories/54371',
-                  name: 'Avengers: The Initiative (2007) #14, Spotlight Variant - Int',
-                  type: 'interiorStory'
-                }
-              ],
-              returned: 20
-            },
-            events: {
-              available: 1,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1011334/events',
-              items: [{
-                resourceURI: 'http://gateway.marvel.com/v1/public/events/269',
-                name: 'Secret Invasion'
-              }],
-              returned: 1
-            },
-            urls: [{
-                type: 'detail',
-                url: 'http://marvel.com/characters/74/3-d_man?utm_campaign=apiRef&utm_source=dadf1ca6c54468f0ed5cdbb80d4b1f97'
-              },
-              {
-                type: 'wiki',
-                url: 'http://marvel.com/universe/3-D_Man_(Chandler)?utm_campaign=apiRef&utm_source=dadf1ca6c54468f0ed5cdbb80d4b1f97'
-              },
-              {
-                type: 'comiclink',
-                url: 'http://marvel.com/comics/characters/1011334/3-d_man?utm_campaign=apiRef&utm_source=dadf1ca6c54468f0ed5cdbb80d4b1f97'
-              }
-            ]
-          },
-          {
-            id: 1017100,
-            name: 'A-Bomb (HAS)',
-            description: 'Rick Jones has been Hulk\'s best bud since day one, but now he\'s more than a friend...he\'s a teammate! Transformed by a Gamma energy explosion, A-Bomb\'s thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction! ',
-            modified: '2013-09-18T15:54:04-0400',
-            thumbnail: {
-              path: 'http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16',
-              extension: 'jpg'
-            },
-            resourceURI: 'http://gateway.marvel.com/v1/public/characters/1017100',
-            comics: {
-              available: 0,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/comics',
-              items: [],
-              returned: 0
-            },
-            series: {
-              available: 0,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/series',
-              items: [],
-              returned: 0
-            },
-            stories: {
-              available: 1,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/stories',
-              items: [{
-                resourceURI: 'http://gateway.marvel.com/v1/public/stories/105929',
-                name: 'cover from Free Comic Book Day 2013 (Avengers/Hulk) (2013) #1',
-                type: 'cover'
-              }],
-              returned: 1
-            },
-            events: {
-              available: 0,
-              collectionURI: 'http://gateway.marvel.com/v1/public/characters/1017100/events',
-              items: [],
-              returned: 0
-            },
-            urls: [{
-                type: 'detail',
-                url: 'http://marvel.com/characters/76/a-bomb?utm_campaign=apiRef&utm_source=dadf1ca6c54468f0ed5cdbb80d4b1f97'
-              },
-              {
-                type: 'comiclink',
-                url: 'http://marvel.com/comics/characters/1017100/a-bomb_has?utm_campaign=apiRef&utm_source=dadf1ca6c54468f0ed5cdbb80d4b1f97'
-              }
-            ]
-          }
-        ],
-        offset: {
-          characters: 20,
-          comics: 20
-        },
-        receivedAt: null,
-        isFocused: false
-      },
-      actualProfil: {
-        id: 1009146,
-        data: null,
-        infosDisplayed: null,
-        relatedData: {
-          isFetching: false,
-          actualRelatedData: [],
-          previousRelatedData: []
-        }
-      }
-    })
-
-    store.dispatch(act.getProfil(1017100));
-    const actions = store.getActions()
-
-    expect(actions).toEqual(expectedActions);
+    expect(help.createRequestId(
+      (0).toString(),
+      condition
+    ))
+      .toEqual(expectedUrl);
   })
   
-  it('Function checkForItems:: should check if an array exist and has data', () => {
+  it('Function doubleRequest:: should check if previous request match new one and return a boolean', () => {
 
-    const array = [0, 1];
+    const lastRequest = "boo";
+    const newRequest = "far";
 
-    expect(help.checkForItems(array)).toEqual(true);
+    expect(help.doubleRequest(newRequest, lastRequest)).toEqual(false);
   })
   
-  it('Function checkItemsById:: should check id match with object\'s id in an array', () => {
+  it('Function getCache:: should check id match with object\'s id in an array', () => {
 
     const array = [
       {
@@ -764,40 +235,46 @@ describe("Helpers & sync action", () => {
       }
     ];
 
-    expect(help.checkItemsById(22, array)).toEqual({id: 22, bar: "foo"});
+    expect(help.getCache(22, array)).toEqual({id: 22, bar: "foo"});
+  })
+  
+  it('Function getConditions:: should return an object defining conditions describing how createRequestId func should behave', () => {
+
+    const condition = {
+      type: "browsing",
+      category: "characters",
+      idKnown: false
+    };
+
+    expect(help.getConditions('ch')).toEqual(condition);
   })
 })
+
 
 describe("Reducers", () => {
   
   it('Reducer "posts" | action "REQUEST_POSTS":: should return a new state with last request id fetched, set isFetching to "true" and error to "null"', () => {
     
     const oldState = {
-      characters: {
-        lastFetchId: null,
-        items: [],
-        isFetching: false,
+      lastFetchId: {
+        characters: null,
+        comics: null,
+        relatedData: null,
       },
-      comics: {
-        lastFetchId: null,
-        items: [],
-        isFetching: false,
-      }
+      cached: [],
+      isFetching: false,
     };
 
     const newState = {
-       characters: {
-         lastFetchId: requestCharacters,
-         items: [],
-         isFetching: true,
-         error: null
-       },
-       comics: {
-         lastFetchId: null,
-         items: [],
-         isFetching: false,
-       }
-     };
+      lastFetchId: {
+        characters: requestCharacters,
+        comics: null,
+        relatedData: null,
+      },
+      cached: [],
+      isFetching: true,
+      error: null
+    };
 
     expect(reducer.posts(oldState, act.requestFetch(catCharacters, requestCharacters))).toEqual(newState);
   })
@@ -805,35 +282,27 @@ describe("Reducers", () => {
   it('Reducer "posts" | action "RECEIVE_POSTS":: should return a new state with isFetching to "false", add a new object to "items" with unique id, data, and released date', () => {
     
     const oldState = {
-      characters: {
-        lastFetchId: null,
-        items: [],
-        isFetching: false,
+      lastFetchId: {
+        characters: null,
+        comics: null,
+        relatedData: null,
       },
-      comics: {
-        lastFetchId: null,
-        items: [],
-        isFetching: false,
-      }
+      cached: [],
+      isFetching: false,
     };
 
     const newState = {
-      characters: {
-        lastFetchId: null,
-        items: [
-          {
-            id: requestCharacters,
-            data: [0, 1, 2],
-            receivedAt: Date()
-          }
-        ],
-        isFetching: false,
+      lastFetchId: {
+        characters: null,
+        comics: null,
+        relatedData: null,
       },
-      comics: {
-        lastFetchId: null,
-        items: [],
-        isFetching: false,
-      }
+      cached: [{
+        id: requestCharacters,
+        data: [0, 1, 2],
+        receivedAt: Date()
+      }],
+      isFetching: false,
     };
 
     const data = {
@@ -845,53 +314,29 @@ describe("Reducers", () => {
     expect(reducer.posts(oldState, act.receiveFetch(catCharacters, data, requestCharacters))).toEqual(newState);
   })
   
-  it('Reducer "posts" | action "ADD_MORE":: should return a new state with isFetching to "false" and concat new result\'s data to first result\'s data fetched before ', () => {
+  it('Reducer "posts" | action "SET_CURRENT_PAGE":: should return a new state with new requestId in the right category', () => {
     
     const oldState = {
-      characters: {
-        lastFetchId: null,
-        items: [
-          {
-            id: requestCharacters,
-            data: [0, 1, 2],
-            receivedAt: Date()
-          }
-        ],
-        isFetching: true,
+      lastFetchId: {
+        characters: null,
+        comics: null,
+        relatedData: null,
       },
-      comics: {
-        lastFetchId: null,
-        items: [],
-        isFetching: false,
-      }
+      cached: [],
+      isFetching: false,
     };
 
     const newState = {
-      characters: {
-        lastFetchId: null,
-        items: [
-          {
-            id: requestCharacters,
-            data: [0, 1, 2, 3, 4, 5],
-            receivedAt: Date()
-          }
-        ],
-        isFetching: false,
+      lastFetchId: {
+        characters: requestCharacters,
+        comics: null,
+        relatedData: null,
       },
-      comics: {
-        lastFetchId: null,
-        items: [],
-        isFetching: false,
-      }
+      cached: [],
+      isFetching: false,
     };
 
-    const data = {
-      data: {
-        results: [3, 4, 5]
-      }
-    }
-
-    expect(reducer.posts(oldState, act.addMore(catCharacters, data))).toEqual(newState);
+    expect(reducer.posts(oldState, act.setCurrentPage(requestCharacters, catCharacters))).toEqual(newState);
   })
 
   it('Reducer "posts" | action "ERROR_POSTS":: should return a new state with informations about category\'s last error\n\n', () => {
@@ -935,10 +380,7 @@ describe("Reducers", () => {
     const oldState = {
       id: null,
       data: [],
-      offset: {
-        characters: 20,
-        comics: 20
-      },
+      offset: 20,
       receivedAt: Date(),
       isFocused: false
     };
@@ -947,10 +389,7 @@ describe("Reducers", () => {
       id: requestCharacters,
       data: [{},{}],
       category: catCharacters,
-      offset: {
-        characters: 20,
-        comics: 20
-      },
+      offset: 0,
       receivedAt: Date(),
       isFocused: false
      };
@@ -964,25 +403,18 @@ describe("Reducers", () => {
     const oldState = {
       id: null,
       data: [],
-      offset: {
-        characters: 20,
-        comics: 20
-      },
-      receivedAt: Date(),
+      offset: 0,
+      receivedAt: null,
       isFocused: false
     };
 
     const newState = {
       id: null,
       data: [],
-      isFetching: true,
-      category: catCharacters,
-      offset: {
-        characters: 20,
-        comics: 20
-      },
-      receivedAt: Date(),
-      isFocused: false
+      offset: 0,
+      receivedAt: null,
+      isFocused: false,
+      isFetching: true
     };
 
     expect(reducer.actualPage(oldState, act.requestFetch(catCharacters, requestCharacters))).toEqual(newState);
@@ -994,26 +426,20 @@ describe("Reducers", () => {
     const oldState = {
       id: null,
       data: [],
-      isFetching: true,
-      offset: {
-        characters: 20,
-        comics: 20
-      },
-      receivedAt: Date(),
-      isFocused: false
+      offset: 0,
+      receivedAt: null,
+      isFocused: false,
+      isFetching: true
     };
 
     const newState = {
       id: requestCharacters,
-      data: [{}],
-      isFetching: false,
       category: catCharacters,
-      offset: {
-        characters: 20,
-        comics: 20
-      },
+      data: [{}],
+      offset: 0,
       receivedAt: Date(),
-      isFocused: false
+      isFocused: false,
+      isFetching: false
     };
 
     expect(reducer.actualPage(oldState, act.receiveFetch(catCharacters, data, requestCharacters))).toEqual(newState);
@@ -1027,10 +453,7 @@ describe("Reducers", () => {
       id: null,
       data: [{id: 1},{id: 2},{id: 3}],
       isFetching: true,
-      offset: {
-        characters: 20,
-        comics: 20
-      },
+      offset: 0,
       receivedAt: null,
       isFocused: false
     };
@@ -1039,10 +462,7 @@ describe("Reducers", () => {
       data: [{id: 1},{id: 2},{id: 3},{id: 4},{id: 5},{id: 6}],
       id: null,
       isFetching: false,
-      offset: {
-        characters: 40,
-        comics: 20
-      },
+      offset: 30,
       receivedAt: null,
       isFocused: false
     };
@@ -1169,7 +589,7 @@ describe("Reducers", () => {
     expect(reducer.actualProfil(oldState, action)).toEqual(newState);
   })
   
-  it('Reducer "actualProfil" | action "REQUEST_RELATED_DATA":: should return a new state with isFetching set to true', () => {
+  it('Reducer "actualProfil" | action "REQUEST_RELATED_DATA":: should return a new state with isFetching set to true and lastFetchId actualised', () => {
 
     const action = {
       type: act.REQUEST_RELATED_DATA,
@@ -1193,6 +613,7 @@ describe("Reducers", () => {
       infosDisplayed: null,
       relatedData: {
         isFetching: true,
+        lastFetchId: "foo",
         actualRelatedData: [],
         previousRelatedData: []
       }
@@ -1201,10 +622,10 @@ describe("Reducers", () => {
     expect(reducer.actualProfil(oldState, action)).toEqual(newState);
   })
   
-  it('Reducer "actualProfil" | action "SET_RELATED_COMICS":: should return a new state with isFetching set to false and related data added to "actual" and "previous" keys', () => {
+  it('Reducer "actualProfil" | action "SET_RELATED_DATA":: should return a new state with isFetching set to false and related data added to "actual" and "previous" keys', () => {
 
     const action = {
-      type: act.SET_RELATED_COMICS,
+      type: act.SET_RELATED_DATA,
       data: "bar",
       id: "foo"
      },
@@ -1237,10 +658,10 @@ describe("Reducers", () => {
     expect(reducer.actualProfil(oldState, action)).toEqual(newState);
   })
   
-  it('Reducer "actualProfil" | action "RESET_RELATED_COMICS":: should return a new state with isFetching set to false and reset data from "previous" to "actual" key\n\n', () => {
+  it('Reducer "actualProfil" | action "RESET_RELATED_DATA":: should return a new state with isFetching set to false and reset data from "previous" to "actual" key\n\n', () => {
 
     const action = {
-      type: act.RESET_RELATED_COMICS,
+      type: act.RESET_RELATED_DATA,
       data: "bar"
      },
 
@@ -1269,11 +690,11 @@ describe("Reducers", () => {
     expect(reducer.actualProfil(oldState, action)).toEqual(newState);
   })
  
-  it('Reducer "relatedData" | action "SET_RELATED_DATA":: should return a new state with new data and set displayed to true', () => {
+  it('Reducer "relatedData" | action "SET_DATA":: should return a new state with new data and set displayed to true', () => {
 
     const action = {
-      type: act.SET_RELATED_DATA,
-      data: "bar",
+      type: act.SET_DATA,
+      data: {data:{results:["bar"]}},
      },
 
     oldState = {
