@@ -4,7 +4,7 @@ export const getCache = (requestId, previousFetchs) => previousFetchs && previou
   previousFetchs.find(item => item.id === requestId)
   :
   null
-
+10304
 export const createRequestId = (id, conditions) => {
   
   if (!id || !conditions) {
@@ -31,6 +31,7 @@ export const createRequestId = (id, conditions) => {
       return request += conditions.category === "characters" ? `/${id}/comics?` : `/${id}/characters?`
   }
 }
+
 
 export const getConditions = type => {
   

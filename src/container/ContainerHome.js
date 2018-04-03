@@ -83,7 +83,8 @@ const mapDispatchToProps = dispatch => {
     addMore: (category, data) => dispatch(action.addMore(category, data)),
     setRelatedData: (requestId, data) => dispatch(action.setRelatedData(requestId, data)),
     resetRelatedData: (id, data) => dispatch(action.resetRelatedData(id, data)),
-    closeTab: () => dispatch(action.setFalseOnDisplay())
+    closeTab: () => dispatch(action.setFalseOnDisplay()),
+    
   }
 }
 const mapStateToProps = state => {
